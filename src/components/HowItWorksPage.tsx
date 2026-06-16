@@ -5,7 +5,7 @@ import {
   MessageCircle, ShieldCheck, Sparkles, Stethoscope, Users,
 } from "lucide-react";
 import { CTA } from "@/config/cta";
-import { siteConfig, medicalDisclaimer } from "@/config/site";
+import { siteConfig } from "@/config/site";
 import { CTAButton } from "@/components/CTAButton";
 import { TrustBar } from "@/components/TrustBar";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
@@ -82,7 +82,7 @@ const howToSchema = {
           "@type": "HowToStep",
           position: 2,
           name: "We plan your care in 1–3 days",
-          text: "Angel Doctor uses AI-assisted matching to identify suitable hospitals, departments, or clinics. A coordinator prepares a Care Plan with provider options, estimated timelines, pricing guidance, and what to prepare before your visit.",
+          text: "Angel Doctor uses smart matching to identify suitable hospitals, departments, or clinics based on your needs. A coordinator prepares a Care Plan with provider options, estimated timelines, pricing guidance, and what to prepare before your visit.",
         },
         {
           "@type": "HowToStep",
@@ -129,7 +129,7 @@ const howToSchema = {
           "@type": "Question", name: "How much will it cost?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Total cost has several components: hospital/provider medical fees (paid directly by you to the provider), Angel Doctor coordination fees, medical escort fees, and your travel/accommodation costs. Angel Doctor provides pricing guidance during care coordination. We do not publish fake fixed prices or claim to be the guaranteed cheapest option.",
+            text: "Total cost has two main components: hospital/provider medical fees (paid directly by you to the provider after examination) and Angel Doctor service fees (care coordination, appointment planning, and medical escort support — all included). Travel and accommodation are separate. Angel Doctor provides pricing guidance during care coordination. We do not publish fake fixed prices or claim to be the guaranteed cheapest option.",
           },
         },
         {
@@ -203,7 +203,7 @@ export function HowItWorksPage() {
 
       {/* ═══ 1. Hero ═══ */}
       <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,rgba(255,248,251,0.82),rgba(255,255,255,0))]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,rgba(228,240,255,0.7),rgba(255,255,255,0))]" />
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8">
           <Breadcrumbs items={crumbs} />
           <div className="mx-auto max-w-3xl pt-10 text-center">
@@ -320,11 +320,11 @@ export function HowItWorksPage() {
                 <h3 className="text-xl font-semibold text-foreground">We plan your care in 1–3 days</h3>
               </div>
               <p className="mt-4 text-base leading-7 text-muted">
-                Angel Doctor uses AI-assisted matching to identify suitable hospitals, departments, or clinics for your needs. A coordinator prepares your Care Plan — provider options, estimated timelines, pricing guidance, and what to bring.
+                Angel Doctor uses smart matching to identify suitable hospitals, departments, or clinics for your needs. A coordinator prepares your Care Plan — provider options, estimated timelines, pricing guidance, and what to bring.
               </p>
               <ul className="mt-5 space-y-2.5 text-sm leading-6 text-muted">
                 {[
-                  "AI-assisted hospital and provider matching",
+                  "Smart hospital and provider matching",
                   "Care Plan with provider options, timelines, and cost guidance",
                   "Appointment coordination with your chosen provider",
                   "Clear instructions on what to prepare before your visit",
@@ -521,14 +521,6 @@ export function HowItWorksPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ═══ 9. Medical Disclaimer ═══ */}
-      <section className="mx-auto max-w-4xl px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-border bg-mist p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-foreground">Medical Disclaimer</h2>
-          <p className="mt-3 text-sm leading-6 text-muted">{medicalDisclaimer}</p>
         </div>
       </section>
 

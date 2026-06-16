@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
       <div className="mt-8 space-y-6 text-base leading-7 text-muted">
         <section>
           <h2 className="text-xl font-semibold text-foreground">Introduction</h2>
-          <p className="mt-3">Angel Doctor ("we," "us," or "our") is committed to protecting the privacy of individuals who use our website and services. This Privacy Policy explains how we collect, use, and protect personal information and medical travel inquiry details.</p>
+          <p className="mt-3">Angel Doctor (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting the privacy of individuals who use our website and services. This Privacy Policy explains how we collect, use, and protect personal information and medical travel inquiry details.</p>
         </section>
 
         <section>

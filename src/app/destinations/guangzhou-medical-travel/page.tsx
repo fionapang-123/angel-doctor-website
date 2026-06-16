@@ -2,6 +2,8 @@ import { DestinationCityPage, type CityPageData } from "@/components/Destination
 import { createMetadata } from "@/config/metadata";
 import { guangzhouHospitals } from "@/data/hospitals";
 import { getPage } from "@/data/pages";
+import { createPageSchema } from "@/config/schema";
+import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 
 const data: CityPageData = {
   slug: "/destinations/guangzhou-medical-travel",
@@ -30,8 +32,14 @@ const data: CityPageData = {
 };
 
 const page = getPage("/destinations/guangzhou-medical-travel");
+const schema = createPageSchema(page);
 export const metadata = createMetadata(page);
 
 export default function GuangzhouPage() {
-  return <DestinationCityPage data={data} />;
+  return (
+    <>
+      <SchemaJsonLd data={schema} />
+      <DestinationCityPage data={data} />
+    </>
+  );
 }

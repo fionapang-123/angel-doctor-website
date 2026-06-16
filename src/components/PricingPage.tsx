@@ -15,7 +15,7 @@ const packages = [
     name: "Care Navigation",
     price: "Free + $39",
     desc: "Get matched and booked — start with a free pre-check, then we handle your appointment.",
-    popular: false,
+    featured: true,
     features: [
       "Free dental pre-check — send photos/X-rays, get treatment guidance",
       "Appointment help — hospital matching, booking confirmation, visit checklist ($39)",
@@ -28,7 +28,7 @@ const packages = [
     name: "In-Hospital Support",
     price: "From $149",
     desc: "A local care companion joins you at the hospital — registration, navigation, communication, follow-up.",
-    popular: true,
+    featured: false,
     features: [
       "Everything in Care Navigation",
       "Local care companion at your hospital visit",
@@ -43,7 +43,7 @@ const packages = [
     name: "Treatment Concierge",
     price: "From $499",
     desc: "For complex treatment — implants, veneers, crowns, root canal, or multi-visit plans.",
-    popular: false,
+    featured: false,
     features: [
       "Everything in In-Hospital Support",
       "Multi-provider treatment comparison",
@@ -97,15 +97,11 @@ export function PricingPage() {
             <div
               key={pkg.name}
               className={`relative flex flex-col rounded-2xl border bg-surface p-6 shadow-soft sm:p-8 ${
-                pkg.popular
-                  ? "border-primary/30 ring-1 ring-primary/10"
+                pkg.featured
+                  ? "border-primary/20 ring-1 ring-primary/10 bg-blush/30"
                   : "border-line"
               }`}
             >
-              {pkg.popular && (
-                <Badge className="absolute -top-2.5 left-6 bg-primary text-white">Most Popular</Badge>
-              )}
-
               <h2 className="text-xl font-semibold text-foreground">{pkg.name}</h2>
               <div className="mt-2 flex items-baseline gap-1">
                 <span className="text-3xl font-bold text-foreground">{pkg.price}</span>
@@ -193,7 +189,6 @@ export function PricingPage() {
             <div className="mt-8">
               <CTAButton cta="carePlan" />
             </div>
-            <p className="mt-5 text-xs text-muted">Free · 2 minutes · No obligation</p>
           </div>
         </div>
       </section>

@@ -15,16 +15,17 @@ const data: CityPageData = {
     { title: "Health Checkup", body: "Comprehensive health screening at West China Hospital, one of China's largest medical centers.", href: "/treatments/health-checkup-china" },
     { title: "Second Opinion", body: "Specialist review and diagnostics at West China's leading departments.", href: "/treatments/medical-second-opinion-china" },
     { title: "TCM Recovery", body: "Acupuncture and TCM recovery programs in Sichuan's renowned medical environment.", href: "/treatments/tcm-recovery-china" },
+    { title: "Dental Care", body: "Dental treatment planning and care at Chengdu's university-affiliated dental providers.", href: "/treatments/dental-care-china" },
   ],
   hospitals: chengduHospitals,
   providerTypes: ["Public tertiary hospitals", "University-affiliated hospitals", "Comprehensive medical centers"],
   faqs: [
-    { question: "Can foreigners access hospitals in Chengdu?", answer: "Yes. Foreigners can access hospitals and healthcare providers in Chengdu. Angel Doctor helps international patients understand suitable provider options, coordinate appointments, and arrange local medical escort support." },
-    { question: "What treatments is Chengdu best for?", answer: "Chengdu offers strong medical resources. Angel Doctor can help identify suitable hospitals and departments based on your specific treatment needs, preferred timeline, and support requirements." },
-    { question: "Can Angel Doctor help me choose a hospital in Chengdu?", answer: "Yes. Angel Doctor can help compare suitable hospitals and providers in Chengdu based on your medical needs, timeline, budget, and language requirements." },
-    { question: "Can I get an English-speaking medical escort in Chengdu?", answer: "Yes. Angel Doctor's trained local medical escorts are available in Chengdu for hospital registration, navigation, communication support, and follow-up coordination." },
-    { question: "How much does medical care in Chengdu cost?", answer: "Costs vary by treatment type, provider, and complexity. Angel Doctor provides transparent pricing guidance during coordination. Hospital medical fees are paid directly to the provider." },
-    { question: "How long should I stay in Chengdu for treatment?", answer: "Simple checkups may take one day. Specialist consultations and complex treatments may require longer stays. A coordinator can help estimate your timeline based on your needs." },
+    { question: "Can foreigners access hospitals in Chengdu?", answer: "Yes. West China Hospital and other Chengdu medical institutions accept international patients. Angel Doctor helps with appointment coordination, language support, and escort services for your visit." },
+    { question: "What treatments is Chengdu best for?", answer: "Chengdu excels at comprehensive health checkups, specialist second opinions, and TCM recovery programs. West China Hospital — one of China's largest medical centers — anchors the city's medical expertise." },
+    { question: "Can Angel Doctor help me choose a hospital in Chengdu?", answer: "Yes. Angel Doctor can help compare suitable hospitals and providers in Chengdu — including West China Hospital's departments — based on your medical needs, timeline, budget, and language requirements." },
+    { question: "Can I get an English-speaking medical escort in Chengdu?", answer: "Yes. Angel Doctor's trained local medical escorts are available in Chengdu for hospital registration, navigation, communication support, and follow-up coordination at major hospitals." },
+    { question: "How much does medical care in Chengdu cost?", answer: "Costs at West China Hospital and other Chengdu providers vary by treatment type and complexity. Angel Doctor provides transparent pricing guidance during coordination. Hospital medical fees are paid directly to the provider." },
+    { question: "How long should I stay in Chengdu for treatment?", answer: "Simple checkups may take one day. Specialist consultations at West China Hospital may require 2–3 days including diagnostics. A coordinator can help estimate your timeline based on your needs." },
   ],
 };
 

@@ -26,7 +26,6 @@ export function CTASection({ page }: { page: PageContent }) {
           <div className="mt-8 flex flex-col items-center gap-3">
             <CTAButton cta={page.cta} />
           </div>
-          <p className="mt-5 text-xs text-muted/60">Free · 2 minutes · No commitment</p>
         </div>
       </div>
     </section>

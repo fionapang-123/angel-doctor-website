@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 import { CTA } from "@/config/cta";
 import { siteConfig } from "@/config/site";
 import { Badge } from "@/components/ui/badge";
@@ -10,12 +10,45 @@ import { Field, FieldDescription, FieldGroup, FieldLabel, Input, Select, Textare
 
 /* ───── Contact Form (Get Your Care Plan) ───── */
 
-export function ContactForm() {
+export function ContactForm({ titleId }: { titleId?: string } = {}) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const data = {
+      contact: (form.elements.namedItem("contact") as HTMLInputElement)?.value || "",
+      treatment: (form.elements.namedItem("treatment") as HTMLSelectElement)?.value || "",
+      timeline: (form.elements.namedItem("timeline") as HTMLInputElement)?.value || "",
+      city: (form.elements.namedItem("city") as HTMLSelectElement)?.value || "",
+      localSupport: (form.elements.namedItem("localSupport") as HTMLSelectElement)?.value || "",
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)?.value || "",
+      consent: (form.elements.namedItem("consent") as HTMLInputElement)?.checked || false,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Submission failed");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -25,7 +58,7 @@ export function ContactForm() {
           <div className="flex size-16 items-center justify-center rounded-2xl bg-primary-soft">
             <CheckCircle className="size-7 text-primary" />
           </div>
-          <h3 className="font-sora text-xl font-semibold text-foreground">
+          <h3 id={titleId} className="font-sora text-xl font-semibold text-foreground">
             Thank you. Your request has been received.
           </h3>
           <p className="max-w-md text-sm leading-6 text-muted">
@@ -39,9 +72,8 @@ export function ContactForm() {
   return (
     <Card className="border-primary/10">
       <CardHeader>
-        <Badge className="w-fit" variant="secondary">Lightweight care request</Badge>
-        <CardTitle>Tell us what you need</CardTitle>
-        <p className="text-sm text-muted">No medical records required. 2 minutes.</p>
+        <CardTitle id={titleId}>Tell us what you need</CardTitle>
+        <p className="text-sm text-muted">Medical records optional — share only what you're comfortable with. About 2 minutes.</p>
       </CardHeader>
       <CardContent>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
@@ -54,18 +86,18 @@ export function ContactForm() {
               <FieldLabel htmlFor="treatment">Interested in</FieldLabel>
               <Select id="treatment" name="treatment" defaultValue="" required>
                 <option value="" disabled>Select an option</option>
-                <option>Dental care</option>
+                <option>Dental Care</option>
                 <option>Health Checkup</option>
                 <option>TCM Recovery</option>
                 <option>Second Opinion</option>
                 <option>Medical Escort</option>
-                <option>Other</option>
+                <option>Other specialty — tell us below</option>
               </Select>
             </Field>
             <div className="grid gap-5 sm:grid-cols-2">
               <Field>
                 <FieldLabel htmlFor="timeline">When will you be in China?</FieldLabel>
-                <Input id="timeline" name="timeline" type="date" required className="[&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
+                <Input id="timeline" name="timeline" type="date" className="cursor-pointer transition-colors duration-200 [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:scale-110 [&:valid]:border-primary/40 [&:valid]:bg-blush/40" />
               </Field>
               <Field>
                 <FieldLabel htmlFor="city">Which city?</FieldLabel>
@@ -80,7 +112,7 @@ export function ContactForm() {
                   <option>Hangzhou</option>
                   <option>Nanjing</option>
                   <option>Wuhan</option>
-                  <option>Xi'an</option>
+                  <option>Xi&apos;an</option>
                   <option>Zhuhai</option>
                   <option>Not sure yet</option>
                   <option>Other</option>
@@ -92,7 +124,7 @@ export function ContactForm() {
               <Select id="localSupport" name="localSupport" defaultValue="" required>
                 <option value="" disabled>Select</option>
                 <option>Yes, I need a medical escort</option>
-                <option>Maybe — I'd like to learn more</option>
+                <option>Maybe — I&apos;d like to learn more</option>
                 <option>Not at this time</option>
               </Select>
             </Field>
@@ -102,7 +134,7 @@ export function ContactForm() {
                 placeholder="e.g. I'm looking for dental implants in Shenzhen, planning to visit in August. I need English support and a local medical escort."
               />
               <FieldDescription>
-                Photos, reports, or medical records are not required for a general inquiry and can be shared later.
+                Medical records, reports, or photos are welcome but not required — you can share them later.
               </FieldDescription>
             </Field>
           </FieldGroup>
@@ -114,10 +146,21 @@ export function ContactForm() {
           </label>
           <button
             type="submit"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold leading-none text-white shadow-button transition duration-200 hover:bg-primary-strong focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+            disabled={submitting}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold leading-none text-white shadow-button transition duration-200 hover:bg-primary-strong focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 disabled:opacity-60"
           >
-            {CTA.carePlan.label}
+            {submitting ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              CTA.carePlan.label
+            )}
           </button>
+          {error && (
+            <p className="text-sm text-red-600">{error}</p>
+          )}
         </form>
       </CardContent>
     </Card>
@@ -126,12 +169,45 @@ export function ContactForm() {
 
 /* ───── Escort Form (Book Local Medical Escort) ───── */
 
-export function EscortForm() {
+export function EscortForm({ titleId }: { titleId?: string } = {}) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const data = {
+      contact: (form.elements.namedItem("contact") as HTMLInputElement)?.value || "",
+      city: (form.elements.namedItem("city") as HTMLSelectElement)?.value || "",
+      provider: (form.elements.namedItem("provider") as HTMLInputElement)?.value || "",
+      visitDate: (form.elements.namedItem("visitDate") as HTMLInputElement)?.value || "",
+      duration: (form.elements.namedItem("duration") as HTMLSelectElement)?.value || "",
+      language: (form.elements.namedItem("language") as HTMLSelectElement)?.value || "",
+      tasks: (form.elements.namedItem("tasks") as HTMLTextAreaElement)?.value || "",
+    };
+
+    try {
+      const res = await fetch("/api/escort", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Submission failed");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -141,7 +217,7 @@ export function EscortForm() {
           <div className="flex size-16 items-center justify-center rounded-2xl bg-primary-soft">
             <CheckCircle className="size-7 text-primary" />
           </div>
-          <h3 className="font-sora text-xl font-semibold text-foreground">
+          <h3 id={titleId} className="font-sora text-xl font-semibold text-foreground">
             Thank you. Your escort request has been received.
           </h3>
           <p className="max-w-md text-sm leading-6 text-muted">
@@ -156,7 +232,7 @@ export function EscortForm() {
     <Card className="border-primary/10">
       <CardHeader>
         <Badge className="w-fit" variant="secondary">Local visit support</Badge>
-        <CardTitle>Plan your hospital or clinic support</CardTitle>
+        <CardTitle id={titleId}>Plan your hospital or clinic support</CardTitle>
         <p className="text-sm text-muted">Submit even if you are still planning.</p>
       </CardHeader>
       <CardContent>
@@ -180,7 +256,7 @@ export function EscortForm() {
                   <option>Hangzhou</option>
                   <option>Nanjing</option>
                   <option>Wuhan</option>
-                  <option>Xi'an</option>
+                  <option>Xi&apos;an</option>
                   <option>Zhuhai</option>
                   <option>Other</option>
                 </Select>
@@ -194,7 +270,7 @@ export function EscortForm() {
             <div className="grid gap-5 sm:grid-cols-2">
               <Field>
                 <FieldLabel htmlFor="visitDate">Visit date</FieldLabel>
-                <Input id="visitDate" name="visitDate" type="date" />
+                <Input id="visitDate" name="visitDate" type="date" className="[&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
               </Field>
               <Field>
                 <FieldLabel htmlFor="duration">Support duration</FieldLabel>
@@ -225,10 +301,21 @@ export function EscortForm() {
           </FieldGroup>
           <button
             type="submit"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold leading-none text-white shadow-button transition duration-200 hover:bg-primary-strong focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+            disabled={submitting}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold leading-none text-white shadow-button transition duration-200 hover:bg-primary-strong focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 disabled:opacity-60"
           >
-            {CTA.escort.label}
+            {submitting ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              CTA.escort.label
+            )}
           </button>
+          {error && (
+            <p className="text-sm text-red-600">{error}</p>
+          )}
         </form>
       </CardContent>
     </Card>

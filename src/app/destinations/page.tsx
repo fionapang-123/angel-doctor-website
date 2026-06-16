@@ -34,7 +34,7 @@ export default function DestinationsHubPage() {
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pb-18">
           <Breadcrumbs items={crumbs} />
           <div className="mx-auto max-w-3xl pt-10 text-center">
-            <Badge className="mx-auto w-fit" variant="secondary">11 Cities · 48 Hospitals</Badge>
+            <Badge className="mx-auto w-fit" variant="secondary">11 Cities</Badge>
             <h1 className="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Medical Travel Destinations in China
             </h1>
@@ -79,6 +79,42 @@ export default function DestinationsHubPage() {
         </div>
       </section>
 
+      {/* Best City by Treatment — comparison matrix */}
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">City Finder</p>
+        <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Best City by Treatment</h2>
+        <div className="mt-8 overflow-x-auto">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <thead>
+              <tr className="border-b border-line">
+                <th className="pb-3 pr-4 font-semibold text-foreground">Treatment</th>
+                <th className="pb-3 pr-4 font-semibold text-foreground">Recommended Cities</th>
+                <th className="pb-3 font-medium text-muted">Why</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-line">
+              {[
+                ["Dental Care", "Shenzhen, Shanghai, Guangzhou", "Modern dental providers, strong access, short treatment trips"],
+                ["Health Checkup", "Shanghai, Shenzhen, Guangzhou, Beijing", "Executive checkup centers, imaging, specialist review"],
+                ["Second Opinion", "Beijing, Shanghai, Guangzhou", "Strong specialist hospitals and department depth"],
+                ["TCM Recovery", "Guangzhou, Chengdu, Hainan", "TCM institutions, acupuncture, pain/sleep/stress recovery"],
+                ["Rehabilitation", "Guangzhou, Shanghai, Beijing", "Orthopedic, neurological, post-surgery and wellness recovery"],
+              ].map((r, i) => (
+                <tr key={i}>
+                  <td className="py-3 pr-4 font-medium text-foreground">{r[0]}</td>
+                  <td className="py-3 pr-4 text-muted">{r[1]}</td>
+                  <td className="py-3 text-muted">{r[2]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-6 text-center text-sm text-muted">
+          Not sure which city is right for you?{' '}
+          <Link href="/contact" className="font-medium text-primary hover:underline">Get a personalized care plan.</Link>
+        </p>
+      </section>
+
       {/* Final CTA */}
       <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-2xl border border-primary/10 bg-blush px-6 py-12 text-center sm:px-12 sm:py-14">
@@ -93,7 +129,6 @@ export default function DestinationsHubPage() {
             <div className="mt-8">
               <CTAButton cta="carePlan" />
             </div>
-            <p className="mt-5 text-xs text-muted">Free · 2 minutes · No commitment</p>
           </div>
         </div>
       </section>

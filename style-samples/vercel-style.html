@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angel Doctor — Vercel Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #171717;
+      --muted: #4d4d4d;
+      --border: rgba(0,0,0,0.08);
+      --focus: hsla(212, 100%, 48%, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Geist', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-feature-settings: "liga";
+    }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 24px;
+    }
+    .logo-area { display: flex; flex-direction: column; gap: 2px; }
+    .logo { font-size: 18px; font-weight: 600; letter-spacing: -0.36px; color: var(--text); }
+    .logo-sub { font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #666; }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text);
+      padding: 6px 12px; border-radius: 6px; transition: background 0.15s;
+    }
+    .nav-links a:hover { background: rgba(0,0,0,0.04); }
+    .nav-cta {
+      background: var(--text); color: #fff; font-size: 14px; font-weight: 500;
+      padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* Hero */
+    .hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 120px 24px 80px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block; background: #ebf5ff; color: #0068d6;
+      font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 9999px;
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-size: 48px; font-weight: 600; line-height: 1.08; letter-spacing: -2.4px;
+      color: var(--text); margin-bottom: 24px; max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .hero p {
+      font-size: 20px; font-weight: 400; line-height: 1.8; color: var(--muted);
+      max-width: 600px; margin: 0 auto 48px;
+    }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--text); color: #fff; font-size: 16px; font-weight: 500;
+      padding: 10px 24px; border-radius: 6px; border: none; cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      background: #fff; color: var(--text); font-size: 16px; font-weight: 500;
+      padding: 10px 24px; border-radius: 6px;
+      box-shadow: rgba(0,0,0,0.08) 0px 0px 0px 1px;
+      border: none; cursor: pointer; transition: background 0.15s;
+    }
+    .btn-ghost:hover { background: rgba(0,0,0,0.04); }
+
+    /* Features */
+    .features {
+      max-width: 960px; margin: 0 auto; padding: 0 24px 100px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .card {
+      background: #fff; border-radius: 8px; padding: 32px;
+      box-shadow: rgba(0,0,0,0.08) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 2px, rgba(0,0,0,0.04) 0px 8px 8px -8px, #fafafa 0px 0px 0px 1px;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: rgba(0,0,0,0.08) 0px 0px 0px 1px, rgba(0,0,0,0.06) 0px 4px 8px, rgba(0,0,0,0.04) 0px 12px 12px -8px, #fafafa 0px 0px 0px 1px; }
+    .card h3 { font-size: 24px; font-weight: 600; letter-spacing: -0.96px; margin-bottom: 12px; }
+    .card p { font-size: 16px; line-height: 1.5; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      .hero { padding: 80px 16px 60px; }
+      .hero h1 { font-size: 32px; letter-spacing: -1.28px; }
+      .hero p { font-size: 18px; }
+      .features { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <div class="logo-area">
+        <span class="logo">Angel Doctor</span>
+        <span class="logo-sub">China Healthcare, Guided End to End</span>
+      </div>
+      <div class="nav-links">
+        <a href="#">Treatments</a>
+        <a href="#">Destinations</a>
+        <a href="#">How It Works</a>
+        <a href="#">Pricing</a>
+        <a href="#">Guides</a>
+        <button class="nav-cta">Get Your Care Plan</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-badge">Trusted by patients from 40+ countries</span>
+    <h1>World-Class Medical Care in China's Top Hospitals</h1>
+    <p>From consultation to recovery — a dedicated medical escort guides you through every step. No language barrier, no confusion, just care.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Free · Get Your Care Plan</button>
+      <button class="btn-ghost">Book Local Medical Escort</button>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <h3>Verified Hospitals</h3>
+      <p>Every partner hospital is personally vetted by our team. Real facilities, real accreditation, real photos.</p>
+    </div>
+    <div class="card">
+      <h3>End-to-End Escort</h3>
+      <p>A bilingual medical escort accompanies you from airport pickup through all appointments and follow-ups.</p>
+    </div>
+    <div class="card">
+      <h3>Transparent Pricing</h3>
+      <p>Two flat fees: Care Plan + Medical Escort. No hidden costs, no middleman markup on treatment.</p>
+    </div>
+  </section>
+
+  <p style="text-align:center; padding-bottom:40px; font-size:12px; color:#808080; font-family: 'Geist Mono', monospace;">
+    ▲ Vercel style — Geist · white canvas · shadow-as-border · compressed headlines
+  </p>
+</body>
+</html>

@@ -1,10 +1,13 @@
 import { DestinationCityPage, type CityPageData } from "@/components/DestinationCityPage";
 import { createMetadata } from "@/config/metadata";
 import { beijingHospitals } from "@/data/hospitals";
+import { getPage } from "@/data/pages";
+import { createPageSchema } from "@/config/schema";
+import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 
 
 const data: CityPageData = {
-  slug: "beijing-medical-travel",
+  slug: "/destinations/beijing-medical-travel",
   city: "Beijing",
   h1: "Medical Travel in Beijing for International Patients",
   intro: "Access China's top national hospitals in Beijing for specialist consultations, complex second opinions, and advanced diagnostics with Angel Doctor's hospital coordination and local escort support.",
@@ -29,9 +32,15 @@ const data: CityPageData = {
   ],
 };
 
-// const page = getPage("beijing-medical-travel");
-export const metadata = createMetadata(data as any);
+const page = getPage("/destinations/beijing-medical-travel");
+const schema = createPageSchema(page);
+export const metadata = createMetadata(page);
 
 export default function BeijingPage() {
-  return <DestinationCityPage data={data} />;
+  return (
+    <>
+      <SchemaJsonLd data={schema} />
+      <DestinationCityPage data={data} />
+    </>
+  );
 }

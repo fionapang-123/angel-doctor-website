@@ -47,9 +47,36 @@ export function HospitalCard({ item }: { item: CardItem }) {
   return <TreatmentCard item={item} />;
 }
 
-export function CardGrid({ items }: { items: CardItem[] }) {
+export function CardGrid({ items, variant = "default" }: { items: CardItem[]; variant?: "default" | "article" }) {
   if (!items?.length) return null;
 
+  // Article layout: stacked, linear, scannable — designed for reading
+  if (variant === "article") {
+    return (
+      <div className="space-y-10">
+        {items.map((item, i) => (
+          <section key={item.title} className="animate-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+            <h2 className="font-sora text-xl font-semibold tracking-tight text-foreground">
+              {item.title}
+            </h2>
+            <p className="mt-3 text-[15px] leading-7 text-muted">
+              {item.body}
+            </p>
+            {item.href && (
+              <Link
+                href={item.href}
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary-strong"
+              >
+                Read more <ArrowRight className="size-3.5" />
+              </Link>
+            )}
+          </section>
+        ))}
+      </div>
+    );
+  }
+
+  // Default layout: card grid — designed for scanning / discovery
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => (

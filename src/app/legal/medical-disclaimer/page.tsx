@@ -45,7 +45,7 @@ export default function MedicalDisclaimerPage() {
 
         <section>
           <h2 className="text-xl font-semibold text-foreground">Third-Party Hospitals & Providers</h2>
-          <p className="mt-3">Angel Doctor coordinates with third-party hospitals, clinics, and healthcare providers. Angel Doctor does not own, operate, or control partner hospitals and providers. Each provider is responsible for its own medical services, clinical decisions, and treatment outcomes.</p>
+          <p className="mt-3">Angel Doctor coordinates with third-party hospitals, clinics, and healthcare providers. Angel Doctor does not own, operate, or control third-party hospitals and providers. Each provider is responsible for its own medical services, clinical decisions, and treatment outcomes.</p>
         </section>
 
         <section>

@@ -12,9 +12,9 @@ type BrandMarkProps = {
 export function BrandMark({ compact = false, className }: BrandMarkProps) {
   // RGBA transparent logo — no background block visible on any surface
   const src = "/images/angel-doctor-logo.png";
-  // Aspect ratio: 1536/1024 = 1.5
-  const w = compact ? 220 : 280;
-  const h = Math.round(w / 1.5);
+  // Dimensions: 500×200, ratio 2.5
+  const w = compact ? 120 : 280;
+  const h = Math.round(w / 2.5);
 
   return (
     <Link
@@ -22,13 +22,13 @@ export function BrandMark({ compact = false, className }: BrandMarkProps) {
       aria-label="Angel Doctor — China healthcare, guided end to end"
       className={cn("inline-flex shrink-0", className)}
     >
-      <div style={{ width: w }}>
+      <div className={compact ? "w-24 sm:w-28 lg:w-[120px]" : "w-[280px]"}>
         <Image
           src={src}
           alt="Angel Doctor"
           width={w}
           height={h}
-          style={{ width: "100%", height: "auto" }}
+          className="h-auto w-full"
           priority
         />
       </div>

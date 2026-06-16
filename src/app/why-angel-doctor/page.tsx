@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, Building2, Globe, Shield, Users } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
-import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AmbientBlobs } from "@/components/AmbientBlobs";
 import { Badge } from "@/components/ui/badge";
+import { getPage } from "@/data/pages";
+import { createPageSchema } from "@/config/schema";
+import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 
 const crumbs = [
   { label: "Home", href: "/" },
@@ -12,8 +14,11 @@ const crumbs = [
 ];
 
 export default function WhyAngelDoctorPage() {
+  const page = getPage("/why-angel-doctor");
+  const schema = createPageSchema(page);
   return (
     <main>
+      <SchemaJsonLd data={schema} />
       <section className="relative overflow-hidden border-b border-line">
         <AmbientBlobs />
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pb-18">
@@ -29,8 +34,6 @@ export default function WhyAngelDoctorPage() {
           </div>
         </div>
       </section>
-
-      <TrustBar />
 
       {/* Four pillars */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -104,12 +107,11 @@ export default function WhyAngelDoctorPage() {
           <div className="relative">
             <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Experience the Angel Doctor difference</h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted">
-              Free care plan request. No commitment. A coordinator responds within 1-2 business days.
+              A coordinator reviews your needs and responds within 1–2 business days with clear guidance on options, timelines, and next steps.
             </p>
             <div className="mt-8">
               <CTAButton cta="carePlan" />
             </div>
-            <p className="mt-5 text-xs text-muted">Free · 2 minutes · No commitment</p>
           </div>
         </div>
       </section>

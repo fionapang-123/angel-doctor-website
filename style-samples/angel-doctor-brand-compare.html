@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angel Doctor — 3 Style Comparison (Brand Colors)</title>
+  <link href="https://fonts.googleapis.com/css2?display=swap&family=Geist:wght@300;400;500;600&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,510;14..32,590&family=Source+Sans+3:wght@300;400;600&family=Sora:wght@400;600;700&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Source+Code+Pro:wght@400;500" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0b0f19; color:#e2e8f0; font-family:'Inter',sans-serif; padding:40px 24px; }
+    .page-title { text-align:center; margin-bottom:8px; font-size:28px; font-weight:600; color:#fff; }
+    .page-sub { text-align:center; margin-bottom:48px; font-size:14px; color:#94a3b8; font-family:'JetBrains Mono',monospace; }
+
+    .compare-grid { display:flex; flex-direction:column; gap:48px; max-width:1400px; margin:0 auto; }
+
+    /* ======= SHARED ANGEL DOCTOR BRAND TOKENS ======= */
+    .brand { --primary:#e628a8; --primary-strong:#c51e8c; --blush:#eef4ff; --hero-gradient:rgba(228,240,255,0.6); }
+
+    /* ======= STYLE 1: VERCEL (light, compressed, white-canvas) ======= */
+    .vercel { --bg:#ffffff; --text:#1a1a2e; --muted:#475569; --border:rgba(0,0,0,0.06); --card-bg:#ffffff; }
+    .vercel .container { background:var(--bg); border-radius:12px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    .vercel .hero { padding:64px 32px 48px; text-align:center; }
+    .vercel .hero h2 { font-family:'Geist',sans-serif; font-size:44px; font-weight:600; line-height:1.08; letter-spacing:-2.2px; color:var(--text); margin-bottom:16px; max-width:600px; margin-left:auto; margin-right:auto; }
+    .vercel .hero p { font-family:'Geist',sans-serif; font-size:18px; font-weight:400; line-height:1.8; color:var(--muted); max-width:500px; margin:0 auto 36px; }
+    .vercel .hero .ctas { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .vercel .btn-primary { background:var(--primary); color:#fff; font-family:'Geist',sans-serif; font-size:15px; font-weight:500; padding:10px 22px; border-radius:6px; border:none; cursor:pointer; }
+    .vercel .btn-ghost { background:#fff; color:var(--text); font-family:'Geist',sans-serif; font-size:15px; font-weight:500; padding:10px 22px; border-radius:6px; border:none; box-shadow:0 0 0 1px rgba(0,0,0,0.08); cursor:pointer; }
+    .vercel .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:0 32px 48px; max-width:900px; margin:0 auto; }
+    .vercel .card { background:var(--card-bg); border-radius:8px; padding:24px; box-shadow:rgba(0,0,0,0.06) 0 0 0 1px, rgba(0,0,0,0.03) 0 2px 2px, rgba(0,0,0,0.03) 0 8px 8px -8px, #fafafa 0 0 0 1px; }
+    .vercel .card h3 { font-family:'Geist',sans-serif; font-size:20px; font-weight:600; letter-spacing:-0.8px; color:var(--text); margin-bottom:8px; }
+    .vercel .card p { font-family:'Geist',sans-serif; font-size:15px; line-height:1.5; color:var(--muted); }
+
+    /* ======= STYLE 2: LINEAR (dark native, precision) ======= */
+    .linear { --bg:#08090a; --panel:#0f1011; --surface:#191a1b; --text:#f7f8f8; --muted:#d0d6e0; --tertiary:#8a8f98; --border:rgba(255,255,255,0.08); --card-bg:rgba(255,255,255,0.02); }
+    .linear .container { background:var(--bg); border-radius:12px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+    .linear .hero { padding:64px 32px 48px; text-align:center; }
+    .linear .hero h2 { font-family:'Inter',sans-serif; font-feature-settings:"cv01","ss03"; font-size:44px; font-weight:510; line-height:1.0; letter-spacing:-0.968px; color:var(--text); margin-bottom:16px; max-width:600px; margin-left:auto; margin-right:auto; }
+    .linear .hero p { font-family:'Inter',sans-serif; font-feature-settings:"cv01","ss03"; font-size:17px; font-weight:400; line-height:1.6; color:var(--tertiary); max-width:500px; margin:0 auto 36px; letter-spacing:-0.165px; }
+    .linear .hero .ctas { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .linear .btn-primary { background:var(--primary); color:#fff; font-family:'Inter',sans-serif; font-feature-settings:"cv01","ss03"; font-size:15px; font-weight:510; padding:10px 20px; border-radius:6px; border:none; cursor:pointer; }
+    .linear .btn-ghost { background:rgba(255,255,255,0.02); color:var(--muted); font-family:'Inter',sans-serif; font-feature-settings:"cv01","ss03"; font-size:15px; font-weight:510; padding:10px 20px; border-radius:6px; border:1px solid var(--border); cursor:pointer; }
+    .linear .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:0 32px 48px; max-width:900px; margin:0 auto; }
+    .linear .card { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:24px; }
+    .linear .card h3 { font-family:'Inter',sans-serif; font-feature-settings:"cv01","ss03"; font-size:18px; font-weight:590; letter-spacing:-0.216px; color:var(--text); margin-bottom:8px; }
+    .linear .card p { font-family:'Inter',sans-serif; font-feature-settings:"cv01","ss03"; font-size:14px; font-weight:400; line-height:1.6; color:var(--tertiary); letter-spacing:-0.165px; }
+
+    /* ======= STYLE 3: STRIPE (weight 300 luxury, blue-tinted depth) ======= */
+    .stripe { --bg:#ffffff; --heading:#1a1a2e; --body:#64748d; --border:#e5edf5; --shadow-pink:rgba(230,40,168,0.12); --shadow-dark:rgba(0,0,0,0.06); --brand-dark:#1a1128; --card-bg:#ffffff; }
+    .stripe .container { background:var(--bg); border-radius:12px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    .stripe .hero { padding:64px 32px 48px; text-align:center; background:radial-gradient(ellipse at 50% 0%, rgba(228,240,255,0.5) 0%, rgba(255,255,255,0) 70%); }
+    .stripe .hero h2 { font-family:'Source Sans 3',sans-serif; font-feature-settings:"ss01"; font-size:44px; font-weight:300; line-height:1.12; letter-spacing:-0.88px; color:var(--heading); margin-bottom:16px; max-width:600px; margin-left:auto; margin-right:auto; }
+    .stripe .hero p { font-family:'Source Sans 3',sans-serif; font-feature-settings:"ss01"; font-size:17px; font-weight:300; line-height:1.45; color:var(--body); max-width:500px; margin:0 auto 36px; }
+    .stripe .hero .ctas { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .stripe .btn-primary { background:var(--primary); color:#fff; font-family:'Source Sans 3',sans-serif; font-feature-settings:"ss01"; font-size:16px; font-weight:400; padding:10px 20px; border-radius:4px; border:none; cursor:pointer; }
+    .stripe .btn-ghost { background:transparent; color:var(--primary); font-family:'Source Sans 3',sans-serif; font-feature-settings:"ss01"; font-size:16px; font-weight:400; padding:10px 20px; border-radius:4px; border:1px solid rgba(230,40,168,0.25); cursor:pointer; }
+    .stripe .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:0 32px 48px; max-width:900px; margin:0 auto; }
+    .stripe .card { background:var(--card-bg); border:1px solid var(--border); border-radius:6px; padding:24px; box-shadow:var(--shadow-dark) 0 12px 28px 0; }
+    .stripe .card h3 { font-family:'Source Sans 3',sans-serif; font-feature-settings:"ss01"; font-size:20px; font-weight:300; letter-spacing:-0.2px; color:var(--heading); margin-bottom:8px; }
+    .stripe .card p { font-family:'Source Sans 3',sans-serif; font-feature-settings:"ss01"; font-size:15px; font-weight:300; line-height:1.5; color:var(--body); }
+
+    /* Labels */
+    .style-label { display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:0 4px; }
+    .style-label .dot { width:10px; height:10px; border-radius:50%; }
+    .style-label .name { font-size:18px; font-weight:600; color:#fff; }
+    .style-label .desc { font-size:12px; color:#94a3b8; font-family:'JetBrains Mono',monospace; }
+
+    @media (max-width:768px) {
+      .vercel .cards,.linear .cards,.stripe .cards { grid-template-columns:1fr; }
+      .vercel .hero h2,.linear .hero h2,.stripe .hero h2 { font-size:32px; }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Angel Doctor Brand Colors × 3 Design Systems</h1>
+  <p class="page-sub">Primary #e628a8  ·  Blush #eef4ff  ·  Primary-Strong #c51e8c</p>
+
+  <div class="compare-grid">
+
+    <!-- VERCEL -->
+    <div>
+      <div class="style-label"><span class="dot" style="background:#e628a8"></span><span class="name">Vercel 风格</span><span class="desc">· Geist · 纯白画布 · 阴影即边框 · 压缩标题 · 极致留白</span></div>
+      <div class="vercel brand"><div class="container">
+        <div class="hero">
+          <h2>World-Class Medical Care in China's Top Hospitals</h2>
+          <p>From consultation to recovery — a dedicated medical escort guides you through every step.</p>
+          <div class="ctas">
+            <button class="btn-primary">Free · Get Your Care Plan</button>
+            <button class="btn-ghost">Book Local Medical Escort</button>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card"><h3>Verified Hospitals</h3><p>Every partner hospital is personally vetted. Real facilities, real accreditation.</p></div>
+          <div class="card"><h3>End-to-End Escort</h3><p>A bilingual escort accompanies you from airport through all appointments.</p></div>
+          <div class="card"><h3>Transparent Pricing</h3><p>Two flat fees. No hidden costs, no middleman markup on treatment.</p></div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LINEAR -->
+    <div>
+      <div class="style-label"><span class="dot" style="background:#c51e8c"></span><span class="name">Linear 风格</span><span class="desc">· Inter Variable cv01+ss03 · 暗色原生 · 0.02透明度面 · 510签名字重</span></div>
+      <div class="linear brand"><div class="container">
+        <div class="hero">
+          <h2>World-Class Medical Care in China's Top Hospitals</h2>
+          <p>From consultation to recovery — a dedicated medical escort guides you through every step.</p>
+          <div class="ctas">
+            <button class="btn-primary">Free · Get Your Care Plan</button>
+            <button class="btn-ghost">Book Local Medical Escort</button>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card"><h3>Verified Hospitals</h3><p>Every partner hospital is personally vetted. Real facilities, real accreditation.</p></div>
+          <div class="card"><h3>End-to-End Escort</h3><p>A bilingual escort accompanies you from airport through all appointments.</p></div>
+          <div class="card"><h3>Transparent Pricing</h3><p>Two flat fees. No hidden costs, no middleman markup on treatment.</p></div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- STRIPE -->
+    <div>
+      <div class="style-label"><span class="dot" style="background:#eef4ff"></span><span class="name">Stripe 风格</span><span class="desc">· Source Sans 3 · 300字重标题 · 粉色调阴影 · 蓝底渐变 · 品牌深色区</span></div>
+      <div class="stripe brand"><div class="container">
+        <div class="hero">
+          <h2>World-Class Medical Care in China's Top Hospitals</h2>
+          <p>From consultation to recovery — a dedicated medical escort guides you through every step.</p>
+          <div class="ctas">
+            <button class="btn-primary">Free · Get Your Care Plan</button>
+            <button class="btn-ghost">Book Local Medical Escort</button>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card"><h3>Verified Hospitals</h3><p>Every partner hospital is personally vetted. Real facilities, real accreditation.</p></div>
+          <div class="card"><h3>End-to-End Escort</h3><p>A bilingual escort accompanies you from airport through all appointments.</p></div>
+          <div class="card"><h3>Transparent Pricing</h3><p>Two flat fees. No hidden costs, no middleman markup on treatment.</p></div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center; padding:32px 0 16px; font-size:12px; color:#64748b; font-family:'JetBrains Mono',monospace;">
+    Open the file directly — all styles use Angel Doctor brand colors: CTA #e628a8 · blush #eef4ff · selection rgba(230,40,168,0.08)
+  </p>
+</body>
+</html>

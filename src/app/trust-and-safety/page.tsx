@@ -116,7 +116,6 @@ export default function TrustAndSafetyPage() {
             <div className="mt-8">
               <CTAButton cta="carePlan" />
             </div>
-            <p className="mt-5 text-xs text-muted">Free · 2 minutes · No commitment</p>
           </div>
         </div>
       </section>

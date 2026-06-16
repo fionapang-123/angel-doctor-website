@@ -1,23 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Sora, Inter } from "next/font/google";
 import { CtaModalProvider } from "@/components/CtaModal";
+import { ExitIntentListener } from "@/components/ExitIntentListener";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -30,9 +19,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable}`}>
+    <html lang="en">
       <body>
         <CtaModalProvider>
+          <ExitIntentListener />
+          <ScrollReveal />
           <SiteHeader />
           {children}
           <SiteFooter />

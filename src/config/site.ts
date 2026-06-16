@@ -3,7 +3,7 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.angeldoctor.com",
   locale: process.env.NEXT_PUBLIC_SITE_LOCALE || "en",
   description:
-    "Angel Doctor helps international patients access trusted healthcare in China through AI-assisted hospital matching, transparent coordination, and trained local medical escorts.",
+    "Angel Doctor helps international patients access trusted healthcare in China through hospital and provider matching, transparent coordination, and trained local medical escorts.",
   slogan: "China Healthcare, Guided End to End.",
   heroValue: "Fast Care. Fair Price. Clear Guidance.",
   trustLine:

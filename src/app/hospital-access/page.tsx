@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Building2, CheckCircle2, MapPin, Search, ClipboardList, CalendarClock } from "lucide-react";
+import { createPageSchema } from "@/config/schema";
+import { SchemaJsonLd } from "@/components/SchemaJsonLd";
+import { getPage } from "@/data/pages";
 import { CTAButton } from "@/components/CTAButton";
 import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -38,15 +41,18 @@ const accessFaqs = [
 ];
 
 export default function HospitalAccessPage() {
+  const page = getPage("/hospital-access");
+  const schema = createPageSchema(page);
   return (
     <main>
+      <SchemaJsonLd data={schema} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-line">
         <AmbientBlobs />
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pb-18">
           <Breadcrumbs items={crumbs} />
           <div className="max-w-3xl pt-10">
-            <Badge className="w-fit" variant="secondary">48 Hospitals · 11 Cities</Badge>
+            <Badge className="w-fit" variant="secondary">Hospital Access</Badge>
             <h1 className="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Hospital Access in China for International Patients
             </h1>
@@ -236,7 +242,6 @@ export default function HospitalAccessPage() {
             <div className="mt-8">
               <CTAButton cta="carePlan" />
             </div>
-            <p className="mt-5 text-xs text-muted">Free · 2 minutes · No commitment</p>
           </div>
         </div>
       </section>

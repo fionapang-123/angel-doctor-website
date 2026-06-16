@@ -175,17 +175,7 @@ export function HomePage() {
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <CTAButton cta="carePlan" />
-                  <p className="text-xs text-muted/60 sm:pl-1">Free · 2 minutes · No commitment</p>
                 </div>
-                <p className="text-[13px] leading-6 text-muted/80">
-                  <span className="font-medium text-foreground/70">Healthcare group since 1998</span>
-                  <span className="mx-2 text-line">·</span>
-                  200+ hospitals and healthcare providers
-                  <span className="mx-2 text-line">·</span>
-                  600+ trained medical escorts
-                  <span className="mx-2 text-line">·</span>
-                  English-speaking support
-                </p>
               </div>
             </div>
             <div className="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-soft sm:p-8">
@@ -226,7 +216,7 @@ export function HomePage() {
       <TrustBar />
 
       {/* 3. China Healthcare, Guided End to End */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Guided Care</p>
           <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
@@ -262,7 +252,7 @@ export function HomePage() {
       </section>
 
       {/* 4. Popular Treatments */}
-      <section className="border-y border-line bg-mist/40">
+      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What we can coordinate for you</p>
@@ -299,7 +289,7 @@ export function HomePage() {
       </section>
 
       {/* 5. Standardized Medical Escort Network */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">600+ Trained Escorts</p>
@@ -331,7 +321,7 @@ export function HomePage() {
       </section>
 
       {/* 6. How It Works */}
-      <section className="border-y border-line bg-mist/40">
+      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Process</p>
@@ -361,7 +351,7 @@ export function HomePage() {
       </section>
 
       {/* 7. Featured Destinations */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Cities</p>
           <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Featured Medical Destinations</h2>
@@ -391,7 +381,7 @@ export function HomePage() {
       </section>
 
       {/* 8. Why Angel Doctor */}
-      <section className="border-y border-line bg-mist/40">
+      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why Angel Doctor</p>
@@ -425,7 +415,7 @@ export function HomePage() {
       </section>
 
       {/* 9. Pricing Transparency */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Cost Guidance</p>
           <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Pricing Transparency</h2>
@@ -452,7 +442,7 @@ export function HomePage() {
       </section>
 
       {/* 10. Featured Guides */}
-      <section className="border-y border-line bg-mist/40">
+      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Guides</p>
@@ -485,10 +475,7 @@ export function HomePage() {
       {/* 11. FAQ */}
       <FAQBlock faqs={homeFaqs} />
 
-      {/* 12. Medical Disclaimer */}
-      <DisclaimerBlock type="medical" />
-
-      {/* 13. Final CTA */}
+      {/* Final CTA */}
       <CTASection page={homePage} />
 
       {/* Sticky Mobile CTA */}

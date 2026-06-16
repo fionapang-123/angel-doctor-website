@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Building2, CheckCircle2, MapPin, Stethoscope } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
-import { TrustBar } from "@/components/TrustBar";
 import { FAQBlock } from "@/components/FAQBlock";
-import { DisclaimerBlock } from "@/components/DisclaimerBlock";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { HospitalCard } from "@/components/HospitalCard";
@@ -47,10 +45,10 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
           <Breadcrumbs items={crumbs} />
           <div className="pt-8">
             <Badge className="w-fit" variant="secondary">{data.city} · Medical Travel</Badge>
-            <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               {data.h1}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">{data.intro}</p>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">{data.intro}</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <CTAButton cta="carePlan" />
             </div>
@@ -58,29 +56,24 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
         </div>
       </section>
 
-      <TrustBar />
-
-      {/* Quick Answer */}
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-line bg-surface p-6 shadow-soft sm:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Quick Answer</p>
-          <p className="mt-3 text-base leading-7 text-foreground">{data.quickAnswer}</p>
-        </div>
-      </section>
-
       {/* Why This City */}
-      <section className="border-y border-line bg-mist/50">
+      <section className="border-y border-line bg-mist/50 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why {data.city}?</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
             {data.positioning}
           </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">{data.trustLine}</p>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-muted">
+            {data.quickAnswer}
+          </p>
+          <p className="mt-3 text-sm leading-7 text-muted">
+            {data.trustLine}
+          </p>
         </div>
       </section>
 
       {/* Best-Fit Treatments */}
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 reveal-on-scroll">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Best-Fit Treatments</p>
         <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
           Treatments Available in {data.city}
@@ -104,14 +97,17 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
       </section>
 
       {/* Hospital & Provider Access */}
-      <section className="border-y border-line bg-mist/50">
+      <section className="border-y border-line bg-mist/50 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Hospital Access</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
             Hospitals & Providers in {data.city}
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-            Angel Doctor can help international patients coordinate care with selected hospitals and healthcare providers in {data.city}. Provider types include: {data.providerTypes.join(", ")}.
+          <p className="mt-4 max-w-3xl text-base leading-7 text-muted">
+            Angel Doctor can help international patients coordinate care with selected hospitals and healthcare providers in {data.city}. Depending on your medical need, timeline, and budget, we help identify suitable care options and coordinate your hospital visit.
+          </p>
+          <p className="mt-2 text-sm leading-6 text-muted">
+            Provider types include: {data.providerTypes.join(", ")}.
           </p>
 
           {/* Hospital Cards */}
@@ -129,13 +125,13 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
       </section>
 
       {/* Local Medical Escort Support */}
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 reveal-on-scroll">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Local Support</p>
         <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
           Medical Escort Support in {data.city}
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-          Angel Doctor's trained local medical escorts are available in {data.city} to support international patients during hospital or clinic visits.
+        <p className="mt-4 max-w-3xl text-base leading-7 text-muted">
+          Navigating a Chinese hospital alone — especially if you don't speak the language — can be overwhelming. Angel Doctor's trained local medical escorts in {data.city} provide in-person support throughout your visit: registration, translation, payment guidance, and follow-up communication.
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
@@ -158,13 +154,13 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
       </section>
 
       {/* Pricing Guidance */}
-      <section className="border-y border-line bg-mist/50">
+      <section className="border-y border-line bg-mist/50 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Pricing Guidance</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
             Medical Costs in {data.city}
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
+          <p className="mt-4 max-w-3xl text-base leading-7 text-muted">
             Your total cost depends on the treatment type, hospital or provider, doctor availability, diagnostic requirements, treatment complexity, and length of stay. Angel Doctor provides transparent pricing guidance before you confirm your care plan.
           </p>
           <p className="mt-4 text-sm leading-6 text-muted">
@@ -181,24 +177,20 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
       {/* FAQ */}
       <FAQBlock faqs={data.faqs} />
 
-      {/* Disclaimer */}
-      <DisclaimerBlock type="hospital" />
-
       {/* Final CTA */}
-      <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-3xl px-4 pb-14 sm:px-6 lg:px-8 reveal-on-scroll">
         <div className="relative overflow-hidden rounded-2xl border border-primary/10 bg-blush px-6 py-12 text-center sm:px-12 sm:py-14">
           <div className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-primary/4" />
           <div className="relative">
             <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Ready to explore care options in {data.city}?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted">
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted">
               Tell us what treatment you need and when you plan to visit. Angel Doctor will help you compare suitable hospitals, timelines, and local support options.
             </p>
             <div className="mt-8">
               <CTAButton cta="carePlan" />
             </div>
-            <p className="mt-5 text-xs text-muted">Free · 2 minutes · No commitment</p>
           </div>
         </div>
       </section>

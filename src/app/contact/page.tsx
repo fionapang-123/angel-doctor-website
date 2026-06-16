@@ -1,12 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Mail, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, CheckCircle2, Loader2, Mail } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
 import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AmbientBlobs } from "@/components/AmbientBlobs";
+import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 import { Badge } from "@/components/ui/badge";
+import { createPageSchema } from "@/config/schema";
+import { getPage } from "@/data/pages";
 
 const crumbs = [
   { label: "Home", href: "/" },
@@ -38,9 +42,65 @@ const faqs = [
   { q: "Can I contact Angel Doctor on WhatsApp?", a: "Yes. You can reach Angel Doctor via WhatsApp for quick questions. Submit this form first so the coordinator has context when they reply." },
 ];
 
+const page = {
+  ...getPage("/contact"),
+  faqs: faqs.map((faq) => ({ question: faq.q, answer: faq.a })),
+};
+
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const getValue = (sel: string) =>
+      (form.querySelector(sel) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value || "";
+
+    const data = {
+      contact: getValue('[type="email"]'),
+      treatment: getValue("select"),
+      country: getValue('[type="text"]'),
+      phone: getValue('[type="tel"]'),
+      city: getValue("select:nth-of-type(2)"),
+      timeline: getValue('[type="date"]'),
+      localSupport: (form.querySelector("#localSupport") as HTMLInputElement)?.checked || false,
+      message: getValue("textarea"),
+      consent: true,
+    };
+
+    if (!data.contact || !data.treatment) {
+      setError("Please fill in required fields.");
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Submission failed");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
   return (
     <main>
+      <SchemaJsonLd data={createPageSchema(page)} />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-line">
         <AmbientBlobs />
@@ -62,11 +122,22 @@ export default function ContactPage() {
 
       {/* Contact Form */}
       <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
+        {submitted ? (
+          <div className="rounded-2xl border border-line bg-surface p-8 shadow-soft text-center sm:p-12">
+            <div className="flex size-16 mx-auto items-center justify-center rounded-2xl bg-primary-soft">
+              <CheckCircle2 className="size-7 text-primary" />
+            </div>
+            <h2 className="mt-5 text-xl font-semibold text-foreground">Thank you. Your request has been received.</h2>
+            <p className="mt-3 max-w-md mx-auto text-sm leading-6 text-muted">
+              An Angel Doctor coordinator will review your needs and respond within 1–2 business days with initial guidance and next steps.
+            </p>
+          </div>
+        ) : (
         <div className="rounded-2xl border border-line bg-surface p-6 shadow-soft sm:p-8">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Your Care Plan Request</h2>
           <p className="mt-2 text-sm leading-6 text-muted">Fill this out and an Angel Doctor coordinator will respond within 1-2 business days.</p>
 
-          <form className="mt-8 flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
             {/* Email */}
             <div>
               <label className="mb-1.5 block text-sm font-medium text-foreground">Email <span className="text-primary">*</span></label>
@@ -87,7 +158,7 @@ export default function ContactPage() {
 
             {/* Treatment */}
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">Treatment you're interested in <span className="text-primary">*</span></label>
+              <label className="mb-1.5 block text-sm font-medium text-foreground">Treatment you&apos;re interested in <span className="text-primary">*</span></label>
               <select required className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
                 <option value="">Select...</option>
                 {treatmentOptions.map((t) => (
@@ -132,13 +203,26 @@ export default function ContactPage() {
             </label>
 
             {/* Submit */}
-            <button type="submit" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-8 py-3 text-sm font-semibold text-white shadow-button transition hover:bg-primary-strong active:scale-[0.98]">
-              Get My Care Plan
+            <button
+              type="submit"
+              disabled={submitting}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-sm font-semibold text-white shadow-button transition hover:bg-primary-strong active:scale-[0.98] disabled:opacity-60"
+            >
+              {submitting ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Get Your Care Plan"
+              )}
             </button>
 
+            {error && <p className="text-sm text-red-600">{error}</p>}
             <p className="text-center text-xs text-muted">Free · No commitment · 1-2 business day response</p>
           </form>
         </div>
+        )}
       </section>
 
       {/* What Happens Next */}
@@ -189,25 +273,18 @@ export default function ContactPage() {
       <section className="border-y border-line bg-mist/50">
         <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Contact Options</p>
-          <h2 className="mt-3 text-2xl font-semibold text-foreground">Prefer WhatsApp or Email?</h2>
+          <h2 className="mt-3 text-2xl font-semibold text-foreground">Prefer to email us directly?</h2>
           <p className="mt-4 text-base leading-7 text-muted">
-            You can also reach Angel Doctor directly for quick questions. For care requests, we recommend the form above so the coordinator has your context before replying.
+            You can also reach Angel Doctor by email for quick questions. For care plan requests, we recommend the form above so a coordinator has your full context before replying.
           </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-5">
-            <div className="flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 shadow-soft">
-              <MessageCircle className="size-5 text-green-600" />
-              <div>
-                <p className="text-sm font-medium text-foreground">WhatsApp</p>
-                <p className="text-xs text-muted">Quick questions & updates</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 shadow-soft">
+          <div className="mt-6">
+            <a href="mailto:marketing@jumper-medical.com" className="inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 shadow-soft transition hover:border-primary/20">
               <Mail className="size-5 text-primary" />
               <div>
                 <p className="text-sm font-medium text-foreground">Email</p>
-                <p className="text-xs text-muted">Care plans & detailed coordination</p>
+                <p className="text-xs text-muted">marketing@jumper-medical.com</p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { CardGrid } from "@/components/CardGrid";
 import { CTASection } from "@/components/CTASection";
-import { DisclaimerBlock } from "@/components/DisclaimerBlock";
 import { FAQBlock } from "@/components/FAQBlock";
 import { HeroSection } from "@/components/HeroSection";
 import { SchemaJsonLd } from "@/components/SchemaJsonLd";
@@ -25,13 +24,17 @@ export function PageTemplate({ page }: { page: PageContent }) {
           <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             {!isHome && (
               <div className="mb-8">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Care pathway</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                  {page.kind === "article" ? "In this guide" : "Care pathway"}
+                </p>
                 <h2 className="mt-3 max-w-2xl font-sora text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                  Clear information, calmer decisions, supported visits.
+                  {page.kind === "article"
+                    ? "Everything you need to know, organized for quick reading."
+                    : "Clear information, calmer decisions, supported visits."}
                 </h2>
               </div>
             )}
-            <CardGrid items={page.sections} />
+            <CardGrid items={page.sections} variant={page.kind === "article" ? "article" : "default"} />
           </section>
         )}
 
@@ -56,7 +59,6 @@ export function PageTemplate({ page }: { page: PageContent }) {
         ) : null}
 
         <FAQBlock faqs={page.faqs ?? []} />
-        <DisclaimerBlock type={page.disclaimer} />
         <CTASection page={page} />
         <StickyMobileCTA page={page} />
       </main>

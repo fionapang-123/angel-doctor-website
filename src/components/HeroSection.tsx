@@ -18,7 +18,7 @@ export function HeroSection({ page }: { page: PageContent }) {
   return (
     <section className="relative overflow-hidden border-b border-line">
       {/* Subtle warm glow at top */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(235,245,255,0.8),transparent)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(228,240,255,0.8),transparent)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pb-20">
         <Breadcrumbs items={page.breadcrumbs} />
@@ -33,7 +33,13 @@ export function HeroSection({ page }: { page: PageContent }) {
             )}
 
             <div className="flex flex-col gap-5">
-              <h1 className="max-w-3xl font-sora text-hero-mobile font-semibold tracking-tight text-foreground sm:text-hero">
+              <h1
+                className={`max-w-3xl font-sora font-semibold tracking-tight text-foreground ${
+                  isHome
+                    ? "text-hero-mobile sm:text-hero"
+                    : "text-4xl sm:text-5xl lg:text-6xl"
+                }`}
+              >
                 {page.h1}
               </h1>
               <p className="max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
@@ -47,10 +53,6 @@ export function HeroSection({ page }: { page: PageContent }) {
                 <CTAButton cta={page.secondaryCta} variant="secondary" />
               )}
             </div>
-
-            {isHome && (
-              <p className="text-xs text-muted/70">Free · 2 minutes · No commitment</p>
-            )}
 
             <div className="flex flex-wrap gap-x-6 gap-y-2.5">
               {supportCues.map((cue) => {

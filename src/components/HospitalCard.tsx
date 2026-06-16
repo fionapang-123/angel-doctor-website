@@ -41,6 +41,9 @@ export function HospitalCard({ hospital, index = 0 }: { hospital: Hospital; inde
         <h3 className="font-sora text-[15px] font-semibold leading-snug tracking-tight text-foreground group-hover:text-primary transition-colors">
           {hospital.name}
         </h3>
+        <p className="mt-0.5 text-[13px] leading-snug text-muted">
+          {hospital.nameEn}
+        </p>
 
         {/* Meta */}
         <p className="mt-1.5 text-xs text-muted">

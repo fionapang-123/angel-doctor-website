@@ -35,7 +35,7 @@ const data: TreatmentPageData = {
     { title: "Get care options & estimates", body: "Angel Doctor suggests suitable dental providers, treatment approaches, and estimated cost ranges based on your case." },
     { title: "Visit with local support", body: "Your dental appointment is coordinated. A trained medical escort can support you during the clinic visit." },
   ],
-  pricingNote: "Dental treatment costs in China vary by procedure type, materials (e.g. implant brand), provider level, city, and treatment complexity. Angel Doctor provides transparent cost guidance before you commit. Hospital treatment fees are confirmed by the provider after examination.",
+  pricingNote: "For reference: dental implants in China typically fall in the $800–$3,000 range per implant depending on brand, provider, and bone condition — significantly less than the $3,000–$6,000 common in the US, UK, Canada, and Australia. Final costs are confirmed by the provider after examination. Angel Doctor helps you get treatment-specific estimates during care planning.",
   faqs: [
     { q: "How much do dental implants cost in China?", a: "Dental implant costs in China vary significantly by implant brand, provider, city, and bone condition. Angel Doctor can help you get treatment-specific estimates during care planning. Final costs are confirmed by the provider after examination." },
     { q: "Can I get dental crowns or veneers in China during a short trip?", a: "Yes. Many dental providers in Shenzhen, Guangzhou, and Shanghai can accommodate short-stay patients. Timeline depends on procedure complexity. Angel Doctor helps coordinate appointment timing." },
