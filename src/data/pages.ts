@@ -117,21 +117,21 @@ export const pages: Record<string, PageContent> = {
   },
   "/treatments/health-checkup-china": {
     slug: "/treatments/health-checkup-china",
-    title: "Health Checkup in China for International Patients | Angel Doctor",
+    title: "Health Checkup in China — One-Day Executive Screening | Angel Doctor",
     description:
-      "Plan health checkups in China with package comparison, appointment coordination, report support, translation support, and local medical escorts.",
+      "Full health screening in 4–6 hours — cancer screening, cardiac assessment, MRI, CT, blood panels. English reports, same-day specialist access. $500–$1,000 vs $3,000–$6,000 in the US.",
     h1: "Health Checkup in China for International Patients",
     intro:
-      "Health checkup coordination helps international patients plan preventive screening, imaging, blood tests, and specialist review during a China visit.",
+      "Executive health screening completed in one morning, with same-day results, English reports, and immediate specialist access if anything is found — coordinated at China's top tertiary hospital checkup centers.",
     kind: "service",
     cta: "carePlan",
     breadcrumbs: [...homeCrumbs, { label: "Treatments", href: "/treatments" }, { label: "Health Checkup", href: "/treatments/health-checkup-china" }],
     quickAnswer:
-      "Angel Doctor helps patients compare health checkup options by city, package scope, timing, language support needs, and follow-up requirements.",
+      "International patients choose China for health checkups for three reasons: speed (one morning vs weeks), cost ($500–$1,000 vs $3,000–$6,000), and follow-up care — Angel Doctor ensures that if anything is found, you get immediate specialist access, not a referral queue.",
     sections: [
-      { title: "Common Needs", body: "Executive checkups, preventive screening, imaging, blood tests, cardiovascular screening, and report explanation support." },
-      { title: "Best-Fit Cities", body: "Shenzhen, Guangzhou, and Shanghai may fit different checkup needs depending on timeline, provider type, and local support needs." },
-      { title: "Pricing Guidance", body: "Total costs vary by provider, package scope, diagnostic requirements, language support, and local escort needs." },
+      { title: "Executive Screening in One Morning", body: "Blood panels, tumor markers, cardiac assessment, ultrasound, CT, MRI — all completed in 4–6 hours at top-tier hospital checkup centers. Same-day results, English reports, and immediate specialist consultation if abnormalities are found." },
+      { title: "Cancer Early Detection", body: "Lung, liver, stomach, colorectal, prostate, and breast cancer screening included. China's high-volume hospitals detect early-stage cancers at rates comparable to top Western institutions." },
+      { title: "Care Navigation After Screening", body: "The part most competitors ignore: if your checkup finds a lung nodule, elevated tumor marker, or cardiac issue, Angel Doctor arranges same-day specialist access — not a 3-week referral wait." },
     ],
     relatedLinks: destinationLinks,
     faqs: medicalFaq,
@@ -161,21 +161,21 @@ export const pages: Record<string, PageContent> = {
   },
   "/treatments/tcm-recovery-china": {
     slug: "/treatments/tcm-recovery-china",
-    title: "TCM Recovery in China for International Patients | Angel Doctor",
+    title: "TCM Recovery in China — Acupuncture, Cupping, Sleep Therapy | Angel Doctor",
     description:
-      "Explore TCM recovery in China with provider matching, appointment coordination, translation support, and local medical escort arrangements.",
+      "Pain management, cupping therapy (拔火罐), sleep disorders, and stress recovery with licensed TCM practitioners in China. English-speaking escort support.",
     h1: "TCM Recovery in China for International Patients",
     intro:
-      "TCM recovery coordination supports patients exploring acupuncture, pain relief, sleep support, fatigue recovery, stress recovery, and wellness-oriented programs.",
+      "Acupuncture for chronic pain, cupping for muscle recovery, TCM sleep therapy for insomnia — coordinated at university-affiliated TCM hospitals with English-speaking medical escort support.",
     kind: "service",
     cta: "carePlan",
     breadcrumbs: [...homeCrumbs, { label: "Treatments", href: "/treatments" }, { label: "TCM Recovery", href: "/treatments/tcm-recovery-china" }],
     quickAnswer:
-      "Angel Doctor helps international patients understand TCM provider options, prepare visit needs, and arrange local support in suitable Chinese cities.",
+      "Foreign patients travel to China for three TCM treatments: acupuncture for pain, cupping (拔火罐) for muscle recovery, and TCM sleep therapy for insomnia. Angel Doctor coordinates with licensed practitioners at university hospitals.",
     sections: [
-      { title: "Common Patient Goals", body: "Pain support, sleep support, stress recovery, fatigue recovery, acupuncture, and wellness-focused recovery." },
-      { title: "Local Support", body: "Medical escorts may support registration, navigation, communication, payment guidance, and follow-up coordination." },
-      { title: "Questions to Ask", body: "Ask about provider type, visit length, expected schedule, follow-up needs, and whether medical records are useful." },
+      { title: "Pain Management", body: "Acupuncture and tuina massage for chronic back pain, frozen shoulder, migraines, arthritis, and sciatica — the #1 reason international patients seek TCM in China." },
+      { title: "Cupping Therapy (拔火罐)", body: "Made famous by Olympic athletes — suction cup therapy for muscle recovery, inflammation reduction, and circulation improvement. Safe, licensed hospital settings." },
+      { title: "Sleep Therapy", body: "TCM treats insomnia at the root cause — not just sedation. Acupuncture, herbal formulas, and lifestyle diagnosis based on pulse reading and tongue examination." },
     ],
     relatedLinks: destinationLinks,
     faqs: medicalFaq,

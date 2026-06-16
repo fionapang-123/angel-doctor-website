@@ -242,7 +242,7 @@ export function TreatmentPage({ data }: { data: TreatmentPageData }) {
         <div className="relative overflow-hidden rounded-2xl border border-primary/10 bg-blush px-6 py-12 text-center sm:px-12 sm:py-14">
           <AmbientBlobs />
           <div className="relative">
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Ready to explore {data.title.toLowerCase()} in China?</h2>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Ready to explore {data.title.toLowerCase()}?</h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted">
               Tell us what you need and your preferred city. Angel Doctor will help you understand suitable care options, timelines, and local support.
             </p>
