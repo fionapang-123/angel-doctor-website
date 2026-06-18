@@ -1,94 +1,144 @@
 import { NextResponse } from "next/server";
-import { insertLead } from "@/lib/supabase";
-import { notifyTeam, autoReply } from "@/lib/email";
-import {
-  hasLeadStorageConfig,
-  hasTeamNotificationConfig,
-  isEmailContact,
-  isValidLeadContact,
-  normalizeContact,
-} from "@/lib/lead";
+import { getSupabaseAdmin } from "@/lib/supabase";
+import { Resend } from "resend";
+
+// --------------------
+// City normalization
+// --------------------
 
 const VALID_CITIES = [
-  "Shenzhen", "Guangzhou", "Shanghai", "Beijing",
-  "Chengdu", "Chongqing", "Hangzhou", "Nanjing",
-  "Wuhan", "Xi'an", "Zhuhai", "Other",
+  "Shenzhen",
+  "Guangzhou",
+  "Shanghai",
+  "Beijing",
+  "Chengdu",
+  "Chongqing",
+  "Hangzhou",
+  "Nanjing",
+  "Wuhan",
+  "Xi'an",
+  "Zhuhai",
+  "Other",
 ];
 
-export async function POST(request: Request) {
+// normalize city safely
+function normalizeCity(city?: string) {
+  if (!city) return "Other";
+
+  const cleaned = city
+    .trim()
+    .replace(/’/g, "'") // fix smart quotes
+    .replace(/\s+/g, "");
+
+  const match = VALID_CITIES.find(
+    (c) => c.replace(/\s+/g, "") === cleaned
+  );
+
+  return match || "Other";
+}
+
+// --------------------
+// Contact validation
+// --------------------
+function normalizeContact(input?: string) {
+  if (!input) return null;
+
+  const trimmed = input.trim();
+
+  // email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (emailRegex.test(trimmed)) return trimmed;
+
+  // phone / whatsapp
+  const digits = trimmed.replace(/\D/g, "");
+  if (digits.length >= 7 && digits.length <= 16) return digits;
+
+  return null;
+}
+
+// --------------------
+// Main handler
+// --------------------
+export async function POST(req: Request) {
   try {
-    const body = await request.json();
+    const body = await req.json();
 
-    const contact = normalizeContact(body.contact);
-    const emailContact = isEmailContact(contact);
+    // flexible field mapping (IMPORTANT)
+    const contactRaw =
+      body.contact ??
+      body.email ??
+      body.whatsapp ??
+      body.phone ??
+      body.contactInfo;
 
-    if (!isValidLeadContact(contact)) {
+    const contact = normalizeContact(contactRaw);
+
+    // ❗ ONLY HARD BLOCK: invalid contact
+    if (!contact) {
       return NextResponse.json(
-        { error: "Please provide a valid email address or WhatsApp number." },
+        { error: "Invalid contact" },
         { status: 400 }
       );
     }
 
-    if (!body.city || !VALID_CITIES.includes(body.city)) {
-      return NextResponse.json(
-        { error: "Please select a city." },
-        { status: 400 }
-      );
-    }
+    const city = normalizeCity(body.city);
 
     const lead = {
       source: "escort" as const,
       contact,
-      city: body.city,
-      provider: body.provider || null,
-      visit_date: body.visitDate || null,
-      duration: body.duration || null,
-      language: body.language || null,
-      tasks: body.tasks || null,
+      city,
+      provider: body.provider ?? body.hospital ?? null,
+      visit_date: body.visitDate ?? null,
+      duration: body.duration ?? null,
+      language: body.language ?? null,
+      tasks: body.tasks ?? body.message ?? null,
+      created_at: new Date().toISOString(),
     };
 
-    let savedToDatabase = false;
-    let notifiedTeam = false;
+    // --------------------
+    // Supabase write (never block)
+    // --------------------
+    try {
+      const supabase = getSupabaseAdmin();
+      const { error: dbError } = await supabase
+        .from("leads")
+        .insert([lead]);
 
-    if (hasLeadStorageConfig()) {
-      try {
-        await insertLead(lead);
-        savedToDatabase = true;
-      } catch (dbErr) {
-        console.error("[api/escort] Supabase insert failed:", dbErr);
+      if (dbError) {
+        console.error("[Supabase Error]", dbError);
       }
+    } catch (err) {
+      console.error("[Supabase Error]", err);
     }
 
-    if (hasTeamNotificationConfig()) {
-      notifiedTeam = await notifyTeam(lead);
+    // --------------------
+    // Resend notify (never block)
+    // --------------------
+    try {
+      if (process.env.LEAD_NOTIFY_EMAIL) {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from:
+            process.env.EMAIL_FROM ||
+            "Angel Doctor <onboarding@resend.dev>",
+          to: process.env.LEAD_NOTIFY_EMAIL,
+          subject: "New Medical Escort Lead",
+          text: JSON.stringify(lead, null, 2),
+        });
+      }
+    } catch (err) {
+      console.error("[Resend Error]", err);
     }
 
-    if (!savedToDatabase && !notifiedTeam) {
-      return NextResponse.json(
-        {
-          error: "Submission could not be completed. Please contact Angel Doctor directly by WhatsApp or email.",
-          fallback: true,
-        },
-        { status: 503 }
-      );
-    }
+    // --------------------
+    // Response always success
+    // --------------------
+    return NextResponse.json({ success: true, lead });
+  } catch (err) {
+    console.error("[Escort API Fatal]", err);
 
-    if (emailContact) {
-      autoReply(contact, "escort").catch((e) =>
-        console.error("[api/escort] autoReply failed:", e)
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: "Your escort request has been received. A coordinator will follow up with next steps.",
-    });
-  } catch {
     return NextResponse.json(
-      {
-        error: "Unable to process your request. Please try again or contact Angel Doctor directly by WhatsApp or email.",
-        fallback: true,
-      },
+      { error: "Server error" },
       { status: 500 }
     );
   }
