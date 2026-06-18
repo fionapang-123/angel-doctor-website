@@ -1,4 +1,4 @@
-import { DestinationCityPage, type CityPageData } from "@/components/DestinationCityPage";
+import { DestinationCityPage, cityPageToContent, type CityPageData } from "@/components/DestinationCityPage";
 import { createMetadata } from "@/config/metadata";
 import { chengduHospitals } from "@/data/hospitals";
 
@@ -29,8 +29,7 @@ const data: CityPageData = {
   ],
 };
 
-// const page = getPage("chengdu-medical-travel");
-export const metadata = createMetadata(data as any);
+export const metadata = createMetadata(cityPageToContent(data));
 
 export default function ChengduPage() {
   return <DestinationCityPage data={data} />;

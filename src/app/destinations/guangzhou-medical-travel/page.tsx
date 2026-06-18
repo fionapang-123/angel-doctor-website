@@ -39,7 +39,7 @@ export default function GuangzhouPage() {
   return (
     <>
       <SchemaJsonLd data={schema} />
-      <DestinationCityPage data={data} />
+      <DestinationCityPage data={data} includeSchema={false} />
     </>
   );
 }

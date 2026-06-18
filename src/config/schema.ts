@@ -4,8 +4,14 @@ import type { FaqItem, LinkItem, PageContent } from "@/types/page";
 
 type JsonObject = Record<string, unknown>;
 
+const normalizePath = (path: string) => {
+  if (path.startsWith("http")) return path;
+  if (path === "/") return "/";
+  return path.startsWith("/") ? path : `/${path}`;
+};
+
 const absoluteUrl = (path: string) =>
-  path.startsWith("http") ? path : `${siteConfig.url}${path === "/" ? "" : path}`;
+  path.startsWith("http") ? path : `${siteConfig.url}${normalizePath(path) === "/" ? "" : normalizePath(path)}`;
 
 export function createOrganizationSchema() {
   return {
@@ -38,6 +44,7 @@ export function createOrganizationSchema() {
         "@type": "ContactPoint",
         contactType: "customer support",
         email: siteConfig.contactEmail,
+        telephone: siteConfig.whatsappNumber,
         availableLanguage: ["English", "Chinese"],
         areaServed: "International",
       },
@@ -100,7 +107,7 @@ function pagePrimarySchema(page: PageContent) {
   }
 
   if (page.kind === "article") {
-    return {
+    const schema: Record<string, unknown> = {
       "@type": "Article",
       "@id": `${absoluteUrl(page.slug)}#article`,
       headline: page.h1,
@@ -110,8 +117,19 @@ function pagePrimarySchema(page: PageContent) {
       mainEntityOfPage: { "@id": `${absoluteUrl(page.slug)}#webpage` },
       datePublished: page.lastUpdated || "2026-06-15",
       dateModified: page.lastUpdated || "2026-06-15",
+      isAccessibleForFree: true,
+      about: page.relatedLinks?.map((link) => link.label) || [],
       inLanguage: siteConfig.locale,
     };
+    if (page.citations?.length) {
+      schema.citation = page.citations.map((c) => ({
+        "@type": "CreativeWork",
+        name: c.name,
+        ...(c.author ? { author: { "@type": "Person", name: c.author } } : {}),
+        ...(c.datePublished ? { datePublished: c.datePublished } : {}),
+      }));
+    }
+    return schema;
   }
 
   if (page.kind === "contact") {
@@ -126,6 +144,21 @@ function pagePrimarySchema(page: PageContent) {
 }
 
 function createServiceSchema(page: PageContent) {
+  const destinationCities: Record<string, string> = {
+    beijing: "Beijing",
+    chengdu: "Chengdu",
+    chongqing: "Chongqing",
+    guangzhou: "Guangzhou",
+    hangzhou: "Hangzhou",
+    nanjing: "Nanjing",
+    shanghai: "Shanghai",
+    shenzhen: "Shenzhen",
+    wuhan: "Wuhan",
+    xian: "Xi'an",
+    zhuhai: "Zhuhai",
+  };
+  const city = Object.entries(destinationCities).find(([slug]) => page.slug.includes(slug))?.[1];
+
   return {
     "@type": "Service",
     "@id": `${absoluteUrl(page.slug)}#service`,
@@ -134,13 +167,7 @@ function createServiceSchema(page: PageContent) {
     provider: { "@id": `${siteConfig.url}/#organization` },
     areaServed: {
       "@type": page.slug.includes("/destinations/") ? "City" : "Country",
-      name: page.slug.includes("shenzhen")
-        ? "Shenzhen"
-        : page.slug.includes("guangzhou")
-          ? "Guangzhou"
-          : page.slug.includes("shanghai")
-            ? "Shanghai"
-            : "China",
+      name: city || "China",
     },
     audience: {
       "@type": "Audience",

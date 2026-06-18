@@ -1,38 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowRight, CheckCircle2, Loader2, Mail } from "lucide-react";
-import { CTAButton } from "@/components/CTAButton";
+import { ArrowDown, ArrowRight, CheckCircle2, Mail, MessageCircle } from "lucide-react";
 import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AmbientBlobs } from "@/components/AmbientBlobs";
 import { SchemaJsonLd } from "@/components/SchemaJsonLd";
+import { ContactForm } from "@/components/forms";
+import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { Badge } from "@/components/ui/badge";
 import { createPageSchema } from "@/config/schema";
+import { createWhatsAppUrl, siteConfig } from "@/config/site";
 import { getPage } from "@/data/pages";
+import { trackConversionEvent } from "@/lib/conversion";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "Contact", href: "/contact" },
-];
-
-const treatmentOptions = [
-  "Dental Care",
-  "Health Checkup",
-  "Second Opinion",
-  "TCM Recovery",
-  "Rehabilitation",
-  "Aesthetic Care",
-  "Medical Escort",
-  "Not sure — help me decide",
-  "Other",
-];
-
-const cityOptions = [
-  "Shenzhen", "Guangzhou", "Shanghai", "Beijing",
-  "Chengdu", "Chongqing", "Hangzhou", "Nanjing",
-  "Wuhan", "Xi'an", "Zhuhai", "Not sure yet",
 ];
 
 const faqs = [
@@ -48,56 +32,6 @@ const page = {
 };
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError("");
-    setSubmitting(true);
-
-    const form = e.currentTarget;
-    const getValue = (sel: string) =>
-      (form.querySelector(sel) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value || "";
-
-    const data = {
-      contact: getValue('[type="email"]'),
-      treatment: getValue("select"),
-      country: getValue('[type="text"]'),
-      phone: getValue('[type="tel"]'),
-      city: getValue("select:nth-of-type(2)"),
-      timeline: getValue('[type="date"]'),
-      localSupport: (form.querySelector("#localSupport") as HTMLInputElement)?.checked || false,
-      message: getValue("textarea"),
-      consent: true,
-    };
-
-    if (!data.contact || !data.treatment) {
-      setError("Please fill in required fields.");
-      setSubmitting(false);
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Submission failed");
-      }
-
-      setSubmitted(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  }
   return (
     <main>
       <SchemaJsonLd data={createPageSchema(page)} />
@@ -106,124 +40,39 @@ export default function ContactPage() {
         <AmbientBlobs />
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pb-18">
           <Breadcrumbs items={crumbs} />
-          <div className="max-w-3xl pt-10">
-            <Badge className="w-fit" variant="secondary">Free · No Commitment</Badge>
-            <h1 className="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Get Your Care Plan
-            </h1>
-            <p className="mt-5 text-lg leading-8 text-muted">
-              Tell us what medical or care need you have and your preferred city in China. Angel Doctor will review your situation and help you understand suitable hospital access and coordination options.
-            </p>
+          <div className="grid gap-8 pt-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,0.72fr)] lg:items-start">
+            <div className="max-w-3xl">
+              <Badge className="w-fit" variant="secondary">Free · No Commitment</Badge>
+              <h1 className="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                Get Your Care Plan
+              </h1>
+              <p className="mt-5 text-lg leading-8 text-muted">
+                Tell us what medical or care need you have and your preferred city in China. Angel Doctor will review your situation and help you understand suitable hospital access and coordination options.
+              </p>
+              <a
+                href="#care-plan-form"
+                className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-foreground px-5 py-3 text-sm font-semibold leading-none text-white shadow-soft transition hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-foreground/15 sm:w-auto"
+              >
+                Get Your Care Plan
+                <ArrowDown className="size-4" />
+              </a>
+              <div className="mt-7 grid gap-3 text-sm leading-6 text-muted sm:grid-cols-3">
+                {["No medical records required to start", "Coordinator review in 1-2 business days", "WhatsApp follow-up available"].map((item) => (
+                  <div key={item} className="flex items-start gap-2 rounded-xl border border-line bg-white/75 p-3 shadow-soft">
+                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div id="care-plan-form" className="scroll-mt-24">
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>
 
       <TrustBar />
-
-      {/* Contact Form */}
-      <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
-        {submitted ? (
-          <div className="rounded-2xl border border-line bg-surface p-8 shadow-soft text-center sm:p-12">
-            <div className="flex size-16 mx-auto items-center justify-center rounded-2xl bg-primary-soft">
-              <CheckCircle2 className="size-7 text-primary" />
-            </div>
-            <h2 className="mt-5 text-xl font-semibold text-foreground">Thank you. Your request has been received.</h2>
-            <p className="mt-3 max-w-md mx-auto text-sm leading-6 text-muted">
-              An Angel Doctor coordinator will review your needs and respond within 1–2 business days with initial guidance and next steps.
-            </p>
-          </div>
-        ) : (
-        <div className="rounded-2xl border border-line bg-surface p-6 shadow-soft sm:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Your Care Plan Request</h2>
-          <p className="mt-2 text-sm leading-6 text-muted">Fill this out and an Angel Doctor coordinator will respond within 1-2 business days.</p>
-
-          <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
-            {/* Email */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">Email <span className="text-primary">*</span></label>
-              <input type="email" required placeholder="you@example.com" className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-primary/40 focus:ring-2 focus:ring-primary/10" />
-            </div>
-
-            {/* WhatsApp / Phone */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">WhatsApp / Phone</label>
-              <input type="tel" placeholder="+1 234 567 8900" className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-primary/40 focus:ring-2 focus:ring-primary/10" />
-            </div>
-
-            {/* Country */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">Country / Region</label>
-              <input type="text" placeholder="e.g. United States, Australia, United Kingdom" className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-primary/40 focus:ring-2 focus:ring-primary/10" />
-            </div>
-
-            {/* Treatment */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">Treatment you&apos;re interested in <span className="text-primary">*</span></label>
-              <select required className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
-                <option value="">Select...</option>
-                {treatmentOptions.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Preferred city */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">Preferred city in China</label>
-              <select className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
-                <option value="">Select...</option>
-                {cityOptions.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Travel date */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">When do you plan to travel?</label>
-              <input type="date" className="w-full rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10" />
-            </div>
-
-            {/* Local support */}
-            <div className="flex items-center gap-3">
-              <input type="checkbox" id="localSupport" className="size-4 rounded border-line" />
-              <label htmlFor="localSupport" className="text-sm text-muted">I need local medical escort support during my hospital visit</label>
-            </div>
-
-            {/* Tell us what you need */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-foreground">Tell us what you need <span className="text-primary">*</span></label>
-              <textarea required rows={4} placeholder="e.g. I'm looking for dental implants in Shenzhen, planning to visit in August. I need English support and a local medical escort." className="w-full resize-y rounded-xl border border-line bg-mist/50 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-primary/40 focus:ring-2 focus:ring-primary/10" />
-            </div>
-
-            {/* Consent */}
-            <label className="flex items-start gap-3 text-xs leading-5 text-muted">
-              <input type="checkbox" required className="mt-0.5 size-4 shrink-0 rounded border-line" />
-              <span>I understand that Angel Doctor provides care coordination and medical travel support, not medical diagnosis or treatment. I agree to be contacted about my inquiry.</span>
-            </label>
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-sm font-semibold text-white shadow-button transition hover:bg-primary-strong active:scale-[0.98] disabled:opacity-60"
-            >
-              {submitting ? (
-                <>
-                  <Loader2 className="size-4 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                "Get Your Care Plan"
-              )}
-            </button>
-
-            {error && <p className="text-sm text-red-600">{error}</p>}
-            <p className="text-center text-xs text-muted">Free · No commitment · 1-2 business day response</p>
-          </form>
-        </div>
-        )}
-      </section>
 
       {/* What Happens Next */}
       <section className="border-y border-line bg-mist/50">
@@ -273,16 +122,29 @@ export default function ContactPage() {
       <section className="border-y border-line bg-mist/50">
         <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Contact Options</p>
-          <h2 className="mt-3 text-2xl font-semibold text-foreground">Prefer to email us directly?</h2>
+          <h2 className="mt-3 text-2xl font-semibold text-foreground">Prefer to contact us directly?</h2>
           <p className="mt-4 text-base leading-7 text-muted">
-            You can also reach Angel Doctor by email for quick questions. For care plan requests, we recommend the form above so a coordinator has your full context before replying.
+            You can also reach Angel Doctor by email or WhatsApp for quick questions. For care plan requests, we recommend the form above so a coordinator has your full context before replying.
           </p>
-          <div className="mt-6">
-            <a href="mailto:marketing@jumper-medical.com" className="inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 shadow-soft transition hover:border-primary/20">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a href={`mailto:${siteConfig.contactEmail}`} className="inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 shadow-soft transition hover:border-primary/20">
               <Mail className="size-5 text-primary" />
               <div>
                 <p className="text-sm font-medium text-foreground">Email</p>
-                <p className="text-xs text-muted">marketing@jumper-medical.com</p>
+                <p className="text-xs text-muted">{siteConfig.contactEmail}</p>
+              </div>
+            </a>
+            <a
+              href={createWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackConversionEvent("whatsapp_clicked", { source: "contact", location: "contact_options" })}
+              className="inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 shadow-soft transition hover:border-primary/20"
+            >
+              <MessageCircle className="size-5 text-primary" />
+              <div>
+                <p className="text-sm font-medium text-foreground">WhatsApp</p>
+                <p className="text-xs text-muted">{siteConfig.whatsappNumber}</p>
               </div>
             </a>
           </div>
@@ -325,6 +187,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <StickyMobileCTA page={page} />
     </main>
   );
 }

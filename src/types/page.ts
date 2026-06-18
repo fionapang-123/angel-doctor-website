@@ -41,4 +41,5 @@ export type PageContent = {
   faqs?: FaqItem[];
   disclaimer?: "medical" | "hospital" | "legal" | "none";
   lastUpdated?: string;
+  citations?: { name: string; author?: string; datePublished?: string }[];
 };

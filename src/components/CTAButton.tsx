@@ -13,15 +13,15 @@ type CTAButtonProps = {
 
 const variantStyles: Record<string, string> = {
   primary:
-    "bg-primary text-white shadow-button hover:bg-primary-strong focus-visible:ring-primary/30",
+    "bg-foreground text-white shadow-soft hover:bg-foreground/90 focus-visible:ring-foreground/12 active:bg-foreground/95",
   secondary:
-    "border border-primary/25 bg-primary-soft text-primary hover:border-primary/40 hover:bg-primary-soft/80 focus-visible:ring-primary/25",
+    "border border-primary/25 bg-white text-primary shadow-soft hover:border-primary/40 hover:bg-primary-soft focus-visible:ring-primary/25",
   ghost:
     "text-primary hover:bg-primary-soft hover:text-primary-strong focus-visible:ring-primary/20",
 };
 
 const base =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold leading-none transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 active:scale-[0.98]";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold leading-none transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 active:scale-[0.98]";
 
 export function CTAButton({ cta, variant = "primary", className = "" }: CTAButtonProps) {
   const { open } = useCtaModal();

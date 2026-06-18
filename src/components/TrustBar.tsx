@@ -9,7 +9,7 @@ const trustItems = [
 
 export function TrustBar() {
   return (
-    <div className="border-y border-line bg-mist/50">
+    <div className="border-y border-line bg-white/70">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-7">
         <div className="flex flex-wrap items-center justify-center gap-3">
           {trustItems.map((item) => {
@@ -17,9 +17,9 @@ export function TrustBar() {
             return (
               <div
                 key={item.label}
-                className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-medium text-muted shadow-soft transition hover:border-primary/15 hover:text-foreground"
+                className="flex items-center gap-2.5 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-medium text-muted shadow-soft transition hover:border-primary/25 hover:text-foreground"
               >
-                <Icon aria-hidden="true" className="size-[18px] shrink-0 text-primary/80" />
+                <Icon aria-hidden="true" className="size-[18px] shrink-0 text-primary" />
                 <span>{item.label}</span>
               </div>
             );

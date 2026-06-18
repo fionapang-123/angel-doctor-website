@@ -1,15 +1,16 @@
 import Link from "next/link";
-import { ArrowRight, Building2, CheckCircle2, MapPin, Stethoscope } from "lucide-react";
+import { ArrowRight, CheckCircle2, MapPin, Stethoscope } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
 import { FAQBlock } from "@/components/FAQBlock";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { HospitalCard } from "@/components/HospitalCard";
 import { AmbientBlobs } from "@/components/AmbientBlobs";
+import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 import { Badge } from "@/components/ui/badge";
-import { siteConfig } from "@/config/site";
+import { createPageSchema } from "@/config/schema";
 import type { Hospital } from "@/data/hospitals";
-import type { LinkItem } from "@/types/page";
+import type { LinkItem, PageContent } from "@/types/page";
 
 /* ─── Types ─── */
 
@@ -27,17 +28,55 @@ export type CityPageData = {
   faqs: { question: string; answer: string }[];
 };
 
+export function cityPageToContent(data: CityPageData): PageContent {
+  const slug = data.slug.startsWith("/") ? data.slug : `/destinations/${data.slug}`;
+
+  return {
+    slug,
+    title: data.h1.includes("|") ? data.h1 : `${data.h1} | Angel Doctor`,
+    description: data.intro,
+    h1: data.h1,
+    intro: data.intro,
+    kind: "service",
+    cta: "carePlan",
+    secondaryCta: "escort",
+    breadcrumbs: [
+      { label: "Home", href: "/" },
+      { label: "Destinations", href: "/destinations" },
+      { label: data.city, href: slug },
+    ],
+    quickAnswer: data.quickAnswer,
+    sections: data.bestFitTreatments.map((item) => ({
+      title: item.title,
+      body: item.body,
+      href: item.href,
+    })),
+    relatedLinks: [
+      ...data.bestFitTreatments.map((item) => ({
+        label: item.title,
+        href: item.href,
+      })),
+      { label: "Book Local Medical Escort", href: "/book-local-medical-escort" },
+      { label: "Hospital Access", href: "/hospital-access" },
+    ],
+    faqs: data.faqs,
+    disclaimer: "hospital",
+  };
+}
+
 /* ─── Component ─── */
 
-export function DestinationCityPage({ data }: { data: CityPageData }) {
+export function DestinationCityPage({ data, includeSchema = true }: { data: CityPageData; includeSchema?: boolean }) {
+  const page = cityPageToContent(data);
   const crumbs: LinkItem[] = [
     { label: "Home", href: "/" },
     { label: "Destinations", href: "/destinations" },
-    { label: data.city, href: data.slug },
+    { label: data.city, href: page.slug },
   ];
 
   return (
     <main>
+      {includeSchema && <SchemaJsonLd data={createPageSchema(page)} />}
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-line">
         <AmbientBlobs />
@@ -119,7 +158,7 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
 
           {/* Compliance note */}
           <p className="mt-6 text-sm leading-6 text-muted">
-            Hospital access and appointment availability depend on the patient's condition, department capacity, doctor schedule, medical record review, city preference, timeline, and provider confirmation.
+            Hospital access and appointment availability depend on the patient&apos;s condition, department capacity, doctor schedule, medical record review, city preference, timeline, and provider confirmation.
           </p>
         </div>
       </section>
@@ -131,7 +170,7 @@ export function DestinationCityPage({ data }: { data: CityPageData }) {
           Medical Escort Support in {data.city}
         </h2>
         <p className="mt-4 max-w-3xl text-base leading-7 text-muted">
-          Navigating a Chinese hospital alone — especially if you don't speak the language — can be overwhelming. Angel Doctor's trained local medical escorts in {data.city} provide in-person support throughout your visit: registration, translation, payment guidance, and follow-up communication.
+          Navigating a Chinese hospital alone — especially if you don&apos;t speak the language — can be overwhelming. Angel Doctor&apos;s trained local medical escorts in {data.city} provide in-person support throughout your visit: registration, translation, payment guidance, and follow-up communication.
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[

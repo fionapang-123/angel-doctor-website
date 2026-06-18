@@ -1,48 +1,72 @@
-import { TreatmentPage, type TreatmentPageData } from "@/components/TreatmentPage";
+import { TreatmentPage, treatmentPageToContent, type TreatmentPageData } from "@/components/TreatmentPage";
+import { createMetadata } from "@/config/metadata";
 
 const data: TreatmentPageData = {
   slug: "treatments/medical-second-opinion-china",
   title: "Medical Second Opinion in China",
-  subtitle: "How Angel Doctor Helps You Get a Specialist Second Opinion",
+  subtitle: "Direct Specialist Access Without Referral — 7–53% of Second Opinions Change the Diagnosis",
   badge: "Specialist Access",
-  hero: "Get a second medical opinion from a Chinese specialist without traveling first. Angel Doctor helps international patients submit medical records, identify suitable hospitals and specialists, coordinate remote or in-person second opinions, and support follow-up care planning.",
+  hero: "A second medical opinion can meaningfully change the diagnosis, treatment direction, or confidence in the next step. In many Western systems, getting one involves referral gatekeeping, long waits, and high out-of-pocket consultation fees. China offers direct specialist access through major hospital departments, and Angel Doctor coordinates record preparation, department matching, translation support, and in-person escort support.",
+  heroImage: {
+    src: "/images/escort-scenes/international-patient-lounge-support.png",
+    alt: "Medical second opinion coordination in China with patient lounge and local support",
+    caption: "Medical second opinion coordination in China with record preparation, department matching, translation support, and local visit planning.",
+  },
   whatWeCoordinate: [
-    { title: "Specialist Matching", body: "Based on your diagnosis and medical records, we help identify suitable hospitals and specialist departments in China for a second opinion." },
-    { title: "Record Preparation", body: "We guide you on what records to prepare — diagnosis reports, imaging, test results, medication list, and treatment history." },
-    { title: "Remote or In-Person Options", body: "Depending on your case, a second opinion may be available remotely, or may require an in-person visit. We help you understand both paths." },
-    { title: "Opinion Translation", body: "We help translate the specialist's opinion and recommendations from Chinese to English, including treatment options and care guidance." },
-    { title: "Next-Step Planning", body: "If the second opinion confirms treatment in China, Angel Doctor helps coordinate appointments, hospital access, and local support." },
-    { title: "Multi-disciplinary Access", body: "For complex cases, we can help coordinate multi-department specialist review at major hospitals." },
+    { title: "Specialist & Department Matching", body: "We identify the right subspecialist for your specific condition. A spinal tumor might need neurosurgery or orthopedics — correct matching prevents wasted consultations." },
+    { title: "Record Preparation & Translation", body: "We guide you on what records to prepare — imaging (DICOM preferred), pathology, labs — and arrange professional translation into Chinese before the specialist reviews your case." },
+    { title: "In-Person Consultation with Escort", body: "A bilingual medical escort accompanies your visit — translating the specialist's questions, findings, and recommendations in real time. Written opinion professionally translated into English." },
+    { title: "Next-Step Care Coordination", body: "If the opinion recommends treatment in China, Angel Doctor coordinates the full pathway — hospital access, scheduling, ongoing escort support." },
   ],
   whoIsItFor: [
-    "You've received a serious diagnosis and want a second opinion before proceeding with treatment",
-    "You're considering treatment in China and want a specialist to review your case first",
-    "You have a rare or complex condition and want access to Chinese specialist expertise",
-    "Your home country treatment options are limited and you want to explore alternatives in China",
-    "You want a specialist to confirm a diagnosis, treatment plan, or surgical recommendation",
-    "You're an overseas Chinese seeking a specialist opinion from a top Chinese hospital",
+    "You've received a serious diagnosis (cancer, brain tumor, cardiac) and want expert confirmation before treatment",
+    "A surgeon recommended major surgery but conservative alternatives weren't fully explored",
+    "You have a rare/complex condition — China's high-volume specialists see more cases monthly than many Western specialists see yearly [2]",
+    "You were told 'nothing more can be done' — China's specialists may identify clinical trials or options not yet considered",
+    "Your home country has 6–18 month specialist wait times — China: 1–2 weeks from inquiry to consultation",
   ],
+  commonNeeds: [
+    "Diagnostic confirmation — 7–53% of second opinions result in a materially different diagnosis. For oral pathology, major discrepancies reach 53% [1]",
+    "Volume = accuracy — a specialist who performs a procedure hundreds of times yearly may recommend a different approach than a lower-volume provider. The volume-outcome relationship is one of healthcare's most robust findings [2]",
+    "Cost — US specialist consultation: $300–$600+. China: $30–$100. Including Angel Doctor's coordination, total cost is 60–80% less, with no insurance pre-authorization",
+  ],
+  whatIsIncluded: [
+    "Case intake — coordinator reviews your diagnosis and records to determine the right specialist department",
+    "Medical record translation — key documents professionally translated into Chinese",
+    "Specialist consultation — 20–40 minute review with real-time English interpretation by Angel Doctor's escort",
+    "Written second opinion — specialist's findings, assessment, and recommendations translated into English",
+    "Follow-up coordination — if further testing or treatment in China is recommended, Angel Doctor coordinates next steps",
+  ],
+  hospitalAccessNote: "Angel Doctor coordinates at China's top 3A hospitals: Peking Union Medical College Hospital (Beijing — China's premier multi-specialty center), Fudan and Shanghai Jiao Tong University hospitals (oncology, cardiology, neurosurgery), Sun Yat-sen University hospitals (Guangzhou — oncology, ophthalmology), and West China Hospital (Chengdu — one of the world's largest by patient volume).",
   recommendedCities: [
-    { name: "Beijing", slug: "beijing-medical-travel", why: "Peking Union Medical College Hospital and other top national centers — deep specialist expertise across oncology, neurology, cardiology, and rare diseases." },
-    { name: "Shanghai", slug: "shanghai-medical-travel", why: "Fudan and Shanghai Jiao Tong University hospitals — strong in oncology, cardiology, orthopedics, and specialist surgery." },
-    { name: "Guangzhou", slug: "guangzhou-medical-travel", why: "Sun Yat-sen University hospitals — leading oncology, ophthalmology, and multi-disciplinary centers." },
-    { name: "Chengdu", slug: "chengdu-medical-travel", why: "West China Hospital — comprehensive diagnostics and specialist care across multiple departments." },
+    { name: "Beijing", slug: "beijing-medical-travel", why: "Peking Union Medical College Hospital — China's premier multi-specialty center for complex diagnostics." },
+    { name: "Shanghai", slug: "shanghai-medical-travel", why: "Fudan/Jiao Tong hospitals — strong in oncology, cardiology, neurosurgery." },
+    { name: "Guangzhou", slug: "guangzhou-medical-travel", why: "Sun Yat-sen University hospitals — leading oncology and multi-disciplinary teams." },
+    { name: "Chengdu", slug: "chengdu-medical-travel", why: "West China Hospital — massive patient volume, broad specialist coverage, extensive clinical trials." },
   ],
   process: [
-    { title: "Submit your case", body: "Share your diagnosis, medical records, and what you're seeking a second opinion on. A coordinator will review what's needed." },
-    { title: "Specialist review", body: "Angel Doctor identifies suitable specialists or departments. Your records are prepared for review. Remote or in-person pathway is confirmed." },
-    { title: "Receive your opinion & plan", body: "You receive the specialist's opinion in English. If treatment in China is recommended, Angel Doctor helps coordinate next steps." },
+    { title: "Submit your case", body: "Share your diagnosis, records, imaging, and the specific question for the specialist. A coordinator reviews and guides you on any missing documents." },
+    { title: "Specialist review + opinion", body: "Your records are translated and matched to the right department. The specialist delivers a written opinion — remote or in-person pathway based on your case." },
+    { title: "Decide your next step", body: "You receive the opinion in English. If treatment in China is recommended, Angel Doctor coordinates the pathway. If it confirms your plan, you proceed with confidence." },
   ],
-  pricingNote: "Remote second opinion costs vary by case complexity, specialist department, and review depth. In-person second opinions include consultation fees set by the hospital. Angel Doctor's coordination fees depend on the service package. All hospital and specialist fees are confirmed before you proceed.",
+  timeline: "Remote opinion: 5–10 business days after records received. In-person: 1–2 weeks from inquiry to appointment. Record translation: 2–4 business days. Total: 2–3 weeks from inquiry to written opinion for most cases.",
+  risksAndLimits: [
+    "A second opinion may confirm your original diagnosis — valuable for peace of mind even if nothing changes clinically",
+    "Chinese specialists may recommend treatments approved in China but not in your home country — discuss with your local doctor",
+    "Remote file review has limits — some conditions require physical examination. Angel Doctor helps you determine which path is appropriate",
+  ],
+  pricingNote: "Specialist consultation: $30–$100 (standard), $100–$300 (senior professor). US comparison: $300–$600+. Including Angel Doctor's coordination and translation, total cost typically 60–80% below US out-of-pocket. Hospital fees paid directly.",
   faqs: [
-    { q: "Can I get a second opinion without traveling to China?", a: "For many cases, yes. Remote second opinions are available for patients who can submit medical records, imaging, and test results. A coordinator will confirm whether an in-person visit is required after reviewing your case." },
-    { q: "What medical records do I need for a second opinion?", a: "Typically: diagnosis reports, imaging (CT, MRI, X-ray), pathology reports, blood test results, current medication list, treatment history, and the specific question you want answered. Your coordinator will provide a tailored checklist." },
-    { q: "How long does a second opinion take?", a: "Remote second opinions typically take 5-10 business days after records are received, depending on specialist availability and case complexity. In-person timelines depend on appointment scheduling." },
-    { q: "Will the specialist communicate in English?", a: "Some specialists have English capability. In all cases, Angel Doctor provides translation support so you receive the opinion and recommendations in clear English." },
-    { q: "What if the second opinion recommends treatment in China?", a: "Angel Doctor can help coordinate the next steps — hospital access, appointment scheduling, local escorts, and follow-up planning." },
-    { q: "How is a second opinion different from a regular consultation?", a: "A second opinion involves a structured specialist review of your existing case with specific questions. It may include treatment confirmation, alternative treatment options, or clinical trial eligibility assessment." },
+    { q: "How often does a second opinion change the diagnosis?", a: "7–53% of cases, depending on specialty and complexity. A 2021 BMJ Open systematic review confirmed discrepancies had a 'potential major impact on patient outcomes.' While many confirm the original assessment, a meaningful minority reveal important differences [1]." },
+    { q: "Do I need a GP referral to see a specialist in China?", a: "No. China's direct-access model lets you register directly with any specialist department — unlike gatekeeper systems (UK NHS, Canadian provinces, US HMOs). Tell Angel Doctor your condition; we match you to the right department." },
+    { q: "Can I get a second opinion without traveling?", a: "Remote file review is available for many cases. Complex conditions may benefit from in-person examination. Your coordinator recommends the best path after reviewing your records." },
+    { q: "What records do I need?", a: "Imaging (CT/MRI/PET-CT in DICOM format), pathology slides/reports, clinical summary from your physician, medication list, genetic/molecular results if any. Your coordinator provides a tailored checklist." },
+    { q: "How long does it take?", a: "Remote: 5–10 business days after records received. In-person consultation: 1–2 weeks from inquiry to appointment. Total: 2–3 weeks from inquiry to written opinion." },
+    { q: "Will my home doctor accept a Chinese hospital's opinion?", a: "Specialists at China's top 3A hospitals are internationally recognized. The written opinion is professionally translated with credentials and rationale. Most Western doctors accept opinions from accredited international institutions." },
   ],
 };
+
+export const metadata = createMetadata(treatmentPageToContent(data));
 
 export default function Page() {
   return <TreatmentPage data={data} />;

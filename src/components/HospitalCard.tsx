@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { MapPin, Building2, ArrowRight } from "lucide-react";
+import { MapPin, Building2 } from "lucide-react";
 import type { Hospital } from "@/data/hospitals";
 
 export function HospitalCard({ hospital, index = 0 }: { hospital: Hospital; index?: number }) {
@@ -47,7 +46,7 @@ export function HospitalCard({ hospital, index = 0 }: { hospital: Hospital; inde
 
         {/* Meta */}
         <p className="mt-1.5 text-xs text-muted">
-          {hospital.type} · {hospital.doctorCount} doctors
+          {hospital.type}
         </p>
 
         {/* Tags */}
