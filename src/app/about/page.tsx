@@ -5,11 +5,21 @@ import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { Badge } from "@/components/ui/badge";
+import { createMetadata } from "@/config/metadata";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "About Angel Doctor", href: "/about" },
 ];
+
+const page = {
+  slug: "/about",
+  title: "About Angel Doctor | Medical Travel Coordination in China",
+  description:
+    "Learn about Angel Doctor's healthcare coordination, hospital matching, and local medical escort support for international patients in China.",
+};
+
+export const metadata = createMetadata(page);
 
 export default function AboutPage() {
   return (

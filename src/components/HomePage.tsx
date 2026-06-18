@@ -273,11 +273,11 @@ export function HomePage() {
           </div>
 
           <div className="relative z-10 mt-auto pb-2 md:hidden">
-            <h1 className="font-sora text-[2.85rem] font-extrabold leading-[1.04] tracking-normal text-white">
+            <div className="font-sora text-[2.85rem] font-extrabold leading-[1.04] tracking-normal text-white">
               <span className="block">Efficient Care.</span>
                 <span className="block text-white/80">Fair Price.</span>
                 <span className="block">Clear Guidance.</span>
-              </h1>
+              </div>
               <p className="mt-5 max-w-[21rem] text-base leading-7 text-white/80">
                 Access China healthcare with hospital coordination and local medical escort support.
               </p>

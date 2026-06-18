@@ -1,9 +1,19 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { createMetadata } from "@/config/metadata";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "Privacy Policy", href: "/legal/privacy-policy" },
 ];
+
+const page = {
+  slug: "/legal/privacy-policy",
+  title: "Privacy Policy | Angel Doctor",
+  description:
+    "Read how Angel Doctor handles contact details, care coordination inquiries, medical travel information, and privacy requests.",
+};
+
+export const metadata = createMetadata(page);
 
 export default function PrivacyPolicyPage() {
   return (

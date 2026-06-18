@@ -1,6 +1,14 @@
+const defaultSiteUrl = "https://angel-doctor-global.vercel.app";
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const isLocalSiteUrl = configuredSiteUrl
+  ? /^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?\/?$/.test(configuredSiteUrl)
+  : false;
+
 export const siteConfig = {
   name: "Angel Doctor",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.angeldoctor.com",
+  url: configuredSiteUrl && !(process.env.NODE_ENV === "production" && isLocalSiteUrl)
+    ? configuredSiteUrl
+    : defaultSiteUrl,
   locale: process.env.NEXT_PUBLIC_SITE_LOCALE || "en",
   description:
     "Angel Doctor helps international patients access trusted healthcare in China through hospital and provider matching, transparent coordination, and trained local medical escorts.",
