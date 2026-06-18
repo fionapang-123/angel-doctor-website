@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why China? — Visual Cards</title>
+<style>
+  :root {
+    --primary: #e628a8;
+    --primary-soft: #c51e8c;
+    --blush: #eef4ff;
+    --ink: #1f2124;
+    --muted: #5b6675;
+    --line: #e4e8ed;
+    --mist: #f0f4f8;
+    --surface: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(228,240,255,0.45), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(220,235,250,0.3), transparent),
+      #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    color: var(--ink);
+  }
+
+  .wrap { max-width: 1060px; width: 100%; }
+
+  .section-label {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .section-h2 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    text-align: center;
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 24px;
+  }
+  @media (min-width: 800px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 32px 24px 28px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    border-color: rgba(230,40,168,0.15);
+  }
+
+  .card-illustration {
+    width: 180px;
+    height: 120px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+
+  .card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .card strong { color: var(--primary-soft); font-weight: 600; }
+
+  /* ═══ Illustration: Speed ═══ */
+  .illus-speed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .speed-outer {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--blush);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .speed-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+  }
+  .speed-ring:nth-child(1) { width: 80px; height: 80px; border-color: rgba(230,40,168,0.08); }
+  .speed-ring:nth-child(2) { width: 56px; height: 56px; border-color: rgba(230,40,168,0.14); }
+  .speed-ring:nth-child(3) { width: 32px; height: 32px; border-color: rgba(230,40,168,0.25); }
+  .speed-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    position: relative;
+    z-index: 1;
+  }
+  .speed-label-right {
+    margin-left: 16px;
+    text-align: left;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .speed-label-right b {
+    color: var(--primary-soft);
+    font-size: 13px;
+  }
+  .speed-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 10px;
+  }
+  .speed-arrow svg { display: block; }
+
+  /* ═══ Illustration: Cost ═══ */
+  .illus-cost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .cost-circle {
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+  }
+  .cost-large {
+    width: 78px; height: 78px;
+    background: #eef0f3;
+    color: var(--muted);
+  }
+  .cost-small {
+    width: 58px; height: 58px;
+    background: linear-gradient(135deg, rgba(230,40,168,0.12), rgba(230,40,168,0.06));
+    color: var(--primary-soft);
+    border: 1.5px solid rgba(230,40,168,0.18);
+  }
+  .cost-circle .label {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .cost-circle .value {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .cost-save {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary-soft);
+  }
+
+  /* ═══ Illustration: Quality ═══ */
+  .illus-quality {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 6px;
+    height: 100%;
+  }
+  .quality-block {
+    border-radius: 5px 5px 0 0;
+    background: var(--blush);
+    border: 1px solid rgba(230,40,168,0.12);
+    position: relative;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .qb1 { width: 24px; height: 64px; }
+  .qb2 { width: 30px; height: 82px; background: rgba(230,40,168,0.08); border-color: rgba(230,40,168,0.18); }
+  .qb3 { width: 24px; height: 72px; }
+  .quality-block::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.3;
+  }
+  .qb2::after { opacity: 0.7; width: 10px; height: 10px; top: -6px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+    .cost-circle { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="section-label">Why China?</p>
+  <h2 class="section-h2">Fast Access. Lower Cost. World-Class Hospitals.</h2>
+  <p class="section-sub">Three data-backed reasons international patients choose China for healthcare</p>
+
+  <div class="grid">
+
+    <!-- Speed Card -->
+    <div class="card">
+      <div class="card-illustration illus-speed">
+        <div class="speed-outer">
+          <div class="speed-ring"></div>
+          <div class="speed-ring"></div>
+          <div class="speed-ring"></div>
+          <div class="speed-dot"></div>
+        </div>
+        <div class="speed-label-right">
+          <div>West<br><b>3–6 mo</b></div>
+          <div style="margin:4px 0;color:var(--primary);font-weight:700;font-size:15px;">→</div>
+          <div>China<br><b>1–2 wk</b></div>
+        </div>
+      </div>
+      <h3>Get care sooner</h3>
+      <p>Skip months-long queues. From first contact to hospital visit in <strong>as little as 1–2 weeks</strong>.</p>
+    </div>
+
+    <!-- Cost Card -->
+    <div class="card">
+      <div class="card-illustration illus-cost">
+        <div class="cost-circle cost-large">
+          <span class="label">US / UK</span>
+          <span class="value">$3K+</span>
+        </div>
+        <div class="cost-circle cost-small">
+          <span class="label">China</span>
+          <span class="value">$600</span>
+        </div>
+        <div class="cost-save">−80%</div>
+      </div>
+      <h3>Pay significantly less</h3>
+      <p>Same implant materials, licensed providers — <strong>60–80% less</strong> than Western pricing.</p>
+    </div>
+
+    <!-- Quality Card -->
+    <div class="card">
+      <div class="card-illustration illus-quality">
+        <div class="quality-block qb1"></div>
+        <div class="quality-block qb2"></div>
+        <div class="quality-block qb3"></div>
+      </div>
+      <h3>No compromise on quality</h3>
+      <p>China's <strong>top public tertiary hospitals</strong> — JCI-accredited departments, English-speaking international centers.</p>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

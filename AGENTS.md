@@ -4,8 +4,9 @@
  Angel Doctor international medical tourism website. 
  
  ## Phase 
- Phase 1 Frontend Only. 
- Phase 2 will add Supabase, Stripe webhook, lead database, and admin tools. 
+ Phase 1 Website + Lead Backend. 
+ Supabase lead storage and Resend email notifications are approved for current lead capture. 
+ Phase 2 will add Stripe webhook, admin tools, account access, payment tracking, and deeper operations workflows. 
  
  ## Primary Goals 
  1. Lead capture 
@@ -19,13 +20,15 @@
  TypeScript 
  Tailwind CSS 
  Vercel 
+ Supabase for lead storage 
+ Resend for lead notification and auto-reply 
  
  ## Required Docs 
  Before editing, read: 
  - /docs/website/00_geo_first_website_structure.md 
  - /docs/website/cta-rules-simplified.md 
  - /docs/website/schema-rules-for-geo-seo.md 
- - /docs/website/mobile-responsive-rules.md 
+ - /docs/website/手机端响应式设计规则.md 
  
  For destination work, also read: 
  - /docs/website/destinations-page-spec.md 
@@ -43,12 +46,30 @@
  Do not claim guaranteed appointments. 
  Do not claim guaranteed outcomes. 
  Do not claim Angel Doctor provides diagnosis or treatment. 
- Do not add Supabase in Phase 1 unless explicitly requested. 
+ Supabase lead storage and Resend email notification are allowed for lead capture because they were explicitly requested. 
+ Do not expose Supabase service role keys to the browser. 
+ Do not allow direct public client writes to the leads table unless a future task explicitly adds abuse controls. 
  Do not add user accounts in Phase 1. 
  Do not add Stripe webhook in Phase 1. 
+ Do not add admin dashboard in Phase 1 unless explicitly requested. 
  Do not add unnecessary dependencies. 
  Do not deploy unless I explicitly say "deploy".
  Do not push to GitHub unless I explicitly say "push".
+
+ ## Lead Backend 
+ Current approved lead backend: 
+ - Supabase stores care plan and medical escort leads in the `leads` table. 
+ - Next.js API routes write leads server-side using `SUPABASE_SERVICE_ROLE_KEY`. 
+ - Resend sends team notifications and email auto-replies when configured. 
+ - Required environment variables are documented in `.env.example`. 
+ - Supabase table setup is documented in `/db/leads.sql`. 
+ 
+ Lead backend boundaries: 
+ - Keep forms lightweight. 
+ - Do not require medical record uploads. 
+ - Do not add patient accounts or login. 
+ - Do not add Stripe webhook or payment status tracking yet. 
+ - Do not add complex CRM automation unless explicitly requested. 
  
  ## Navigation 
  Main navigation: 

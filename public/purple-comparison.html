@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Codex Glow</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d12;color:#fff;font-family:system-ui,sans-serif;padding:32px 16px;min-height:100vh}
+h1{text-align:center;font-size:24px;margin-bottom:4px}
+.sub{text-align:center;color:#888;font-size:13px;margin-bottom:36px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:1400px;margin:0 auto}
+.card{background:#1a1a24;border-radius:20px;border:1px solid #2a2a3a;overflow:hidden}
+.glow{height:100px;position:relative;overflow:hidden}
+.glow::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(255,255,255,.15),transparent 70%)}
+.card-body{padding:18px}
+.name{font-size:16px;font-weight:700}
+.desc{font-size:12px;color:#888;margin-top:4px}
+.preview{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.btn-grad{width:100%;padding:12px 0;border-radius:12px;font-size:14px;font-weight:700;text-align:center;color:#fff;position:relative;overflow:hidden}
+.btn-grad::after{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent);border-radius:12px 12px 0 0}
+.btn-glow{width:100%;padding:12px 0;border-radius:12px;font-size:14px;font-weight:700;text-align:center;color:#fff;position:relative}
+.steps{display:flex;gap:8px;margin-top:4px}
+.step{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;position:relative;overflow:hidden}
+.step::after{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:rgba(255,255,255,.15);border-radius:10px 10px 0 0}
+.badge{display:inline-flex;border-radius:99px;padding:4px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;width:fit-content}
+.logo-ref{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:11px;color:#888}
+.logo-dot{width:14px;height:14px;border-radius:4px}
+</style>
+</head>
+<body>
+<h1>✨ Codex 发光渐变</h1>
+<p class="sub">饱和 · 发光 · 连接logo粉色</p>
+<div class="grid" id="g"></div>
+<script>
+const logoColor='#e431b6';
+const opts=[
+{
+  name:'Logo粉→紫→蓝',grad:['#e431b6','#a855f7','#6366f1'],
+  desc:'从logo粉渐变到紫再到indigo，品牌连接最强'
+},{
+  name:'Logo粉→霓虹紫',grad:['#e431b6','#c084fc','#818cf8'],
+  desc:'更亮更发光，中间加了霓虹感'
+},{
+  name:'Logo粉→紫晶',grad:['#d946ef','#a855f7','#7c3aed'],
+  desc:'浓郁饱和，logo粉过渡到深紫'
+},{
+  name:'Logo粉→蓝紫晶',grad:['#e431b6','#8b5cf6','#6d28d9'],
+  desc:'浓烈对比，粉到deep purple'
+},{
+  name:'玫瑰→紫罗兰',grad:['#f472b6','#c084fc','#818cf8'],
+  desc:'柔和发光，轻快现代'
+},{
+  name:'粉→紫→靛(均衡)',grad:['#e879f9','#a78bfa','#6366f1'],
+  desc:'三色均衡，不偏粉不偏蓝'
+},
+];
+let h='';
+opts.forEach((o,i)=>{
+const gradCSS=o.grad.join(',');
+const mid=o.grad[1];
+h+=`<div class="card">
+<div class="glow" style="background:linear-gradient(135deg,${gradCSS})"></div>
+<div class="card-body">
+<div class="name">${o.name}</div>
+<div class="desc">${o.desc}</div>
+<div class="preview">
+<div class="btn-grad" style="background:linear-gradient(135deg,${gradCSS})">Get Your Care Plan →</div>
+<div class="steps">
+${[1,2,3].map(n=>`<div class="step" style="background:linear-gradient(135deg,${gradCSS})">${n}</div>`).join('')}
+</div>
+<span class="badge" style="background:${mid}22;color:${mid};border:1px solid ${mid}44">Section Label</span>
+</div>
+<div class="logo-ref"><div class="logo-dot" style="background:${logoColor}"></div>← 天使医生 logo 粉色</div>
+</div></div>`;
+});
+document.getElementById('g').innerHTML=h;
+</script>
+</body>
+</html>

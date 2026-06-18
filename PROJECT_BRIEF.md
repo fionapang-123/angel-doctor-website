@@ -402,9 +402,9 @@ Recommended URL:
 
 /book-local-medical-escort
 
-## 18. Phase 1 Scope: Frontend Only
+## 18. Phase 1 Scope: Website + Lead Backend
 
-Phase 1 is a frontend-only website build.
+Phase 1 is a GEO-first website build with lightweight lead capture backend.
 
 The goal of Phase 1 is to launch a credible, GEO-first, conversion-focused website on Vercel.
 
@@ -452,13 +452,13 @@ CTA system.
 
 Medical disclaimer blocks.
 
-Lightweight form submission or static-site-friendly form handling.
+Lightweight form submission with Supabase lead storage when configured.
+
+Resend email notification and user auto-reply when configured.
 
 Stripe Payment Link positioning if available.
 
 Phase 1 should not include:
-
-Supabase database.
 
 User accounts.
 
@@ -473,6 +473,8 @@ Stripe webhook.
 Complex payment logic.
 
 CRM automation.
+
+Complex lead workflow automation.
 
 Medical record upload as a required step.
 
@@ -542,15 +544,11 @@ Phase 1 should build the following minimum strong platform:
 
 /legal/terms
 
-## 20. Phase 2 Scope: Supabase and Operational Backend
+## 20. Phase 2 Scope: Operational Backend Expansion
 
-Phase 2 adds backend infrastructure after Phase 1 is stable.
+Phase 2 expands backend infrastructure after the Phase 1 lead backend is stable.
 
 Phase 2 may include:
-
-Supabase lead database.
-
-Supabase escort request database.
 
 Service package order records.
 
@@ -578,7 +576,7 @@ CRM or internal operations integration.
 
 Admin access control.
 
-Phase 2 should preserve the Phase 1 frontend structure and CTA logic.
+Phase 2 should preserve the Phase 1 frontend structure, CTA logic, Supabase lead storage, and Resend notification flow.
 
 ## 21. Suggested Phase 2 Data Structure
 
@@ -1284,7 +1282,7 @@ Mobile experience is strong.
 
 The site can be deployed on Vercel.
 
-The frontend structure can later connect to Supabase without major redesign.
+The lead forms can store submissions in Supabase and notify the team through Resend when environment variables are configured.
 
 ## 41. Codex Development Instruction
 
@@ -1310,9 +1308,9 @@ Before editing code, Codex must understand:
 
 Angel Doctor is a coordination platform, not a hospital.
 
-Phase 1 is frontend only.
+Phase 1 includes the frontend website plus lightweight Supabase and Resend lead handling.
 
-Phase 2 adds Supabase and payment infrastructure.
+Phase 2 adds payment infrastructure, admin tooling, user access, and deeper operations workflows.
 
 Only two primary CTA paths should be used.
 
@@ -1325,5 +1323,4 @@ Every major page must support both conversion and GEO.
 ## 42. One-Sentence Source of Truth
 
 Angel Doctor is a GEO-first China medical travel coordination platform that helps international patients access suitable healthcare options through AI-assisted hospital matching, transparent coordination, and a standardized network of trained local medical escorts.
-
 

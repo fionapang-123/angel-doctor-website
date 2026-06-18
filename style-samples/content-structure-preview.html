@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angel Doctor Content Structure Preview</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #fbf7fb;
+      color: #25172d;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .page { max-width: 1500px; margin: 0 auto; padding: 28px; }
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    .intro h1 { margin-bottom: 8px; font-size: 30px; line-height: 1.12; letter-spacing: 0; }
+    .intro p { max-width: 780px; margin-bottom: 0; color: #6f6378; font-size: 14px; }
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border: 1px solid #eadce8;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(37, 23, 45, .07);
+    }
+    .logo-box img { width: 150px; display: block; }
+    .rule-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 0 0 24px;
+    }
+    .rule-list div {
+      border: 1px solid #eadce8;
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px 14px;
+      color: #6f6378;
+      font-size: 12px;
+    }
+    .rule-list strong { display: block; color: #b5167f; margin-bottom: 3px; }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .option {
+      overflow: hidden;
+      border: 1px solid #eadce8;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(37, 23, 45, .10);
+    }
+    .option-head {
+      min-height: 162px;
+      padding: 20px;
+      border-bottom: 1px solid #eadce8;
+      background: linear-gradient(135deg, #fff 0%, #fff3fb 100%);
+    }
+    .label {
+      color: #d81b92;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .option h2 { margin: 7px 0 8px; font-size: 22px; line-height: 1.15; letter-spacing: 0; }
+    .option-head p { margin: 0; color: #6f6378; font-size: 13px; }
+    .screen {
+      min-height: 760px;
+      background: linear-gradient(180deg, #fff6fb 0, #fff 42%);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 22px;
+      border-bottom: 1px solid #f0d8e8;
+      background: rgba(255,255,255,.88);
+    }
+    .brand img { width: 126px; display: block; }
+    .brand small {
+      display: block;
+      margin-top: 3px;
+      color: #6f6378;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .nav span { color: #6f6378; font-size: 11px; font-weight: 750; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, #ec2ca3, #9b1b7e);
+      box-shadow: 0 14px 28px rgba(216, 27, 146, .22);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+    .hero { padding: 46px 34px 34px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .kicker {
+      margin-bottom: 14px;
+      color: #b5167f;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .hero h3 {
+      margin-bottom: 16px;
+      color: #25172d;
+      font-size: 44px;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+    .short-copy {
+      max-width: 470px;
+      margin-bottom: 22px;
+      color: #6f6378;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .micro-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .micro-trust span {
+      border: 1px solid #efd8e7;
+      border-radius: 999px;
+      background: #fff;
+      padding: 8px 11px;
+      color: #6f6378;
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .panel {
+      border: 1px solid #eadce8;
+      border-radius: 16px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 20px 48px rgba(37, 23, 45, .10);
+    }
+    .panel h4 { margin-bottom: 12px; font-size: 15px; }
+    .choice, .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid #f0d8e8;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 9px;
+      color: #25172d;
+      background: #fffafd;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .choice small, .row small {
+      display: block;
+      margin-top: 3px;
+      color: #7a6b80;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .arrow { color: #d81b92; }
+    .section {
+      padding: 0 34px 34px;
+    }
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .section-title h4 { margin: 0; font-size: 18px; }
+    .section-title a { color: #d81b92; font-size: 12px; font-weight: 850; }
+    .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .tile {
+      border: 1px solid #eadce8;
+      border-radius: 14px;
+      background: #fff;
+      padding: 16px;
+      min-height: 118px;
+    }
+    .tile strong { display: block; margin-bottom: 8px; color: #25172d; font-size: 14px; }
+    .tile p { margin: 0; color: #6f6378; font-size: 12px; line-height: 1.55; }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .step {
+      border-top: 3px solid #d81b92;
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(37, 23, 45, .05);
+    }
+    .step b { color: #d81b92; font-size: 12px; }
+    .step p { margin: 5px 0 0; color: #25172d; font-size: 12px; font-weight: 800; }
+    .quote-card {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 16px;
+      border: 1px solid #eadce8;
+      border-radius: 16px;
+      background: #25172d;
+      color: #fff;
+      padding: 20px;
+    }
+    .quote-card p { color: rgba(255,255,255,.72); font-size: 13px; }
+    .quote-card strong { font-size: 22px; line-height: 1.18; }
+    .finder {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .finder .row {
+      align-items: center;
+      background: #fff;
+      margin: 0;
+    }
+    .tag {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: #fff0fa;
+      color: #b5167f;
+      font-size: 11px;
+      font-weight: 850;
+    }
+    .summary {
+      padding: 18px 20px 22px;
+      border-top: 1px solid #eadce8;
+      background: #fffafd;
+    }
+    .summary h4 { margin-bottom: 10px; font-size: 14px; }
+    .summary ul { margin: 0; padding-left: 18px; color: #6f6378; font-size: 12px; }
+    .summary li + li { margin-top: 5px; }
+    @media (max-width: 1200px) {
+      .options { grid-template-columns: 1fr; }
+      .screen { min-height: auto; }
+    }
+    @media (max-width: 760px) {
+      .page { padding: 18px; }
+      .intro { grid-template-columns: 1fr; }
+      .rule-list { grid-template-columns: 1fr 1fr; }
+      .hero-grid, .quote-card { grid-template-columns: 1fr; }
+      .hero h3 { font-size: 34px; }
+      .tiles, .timeline { grid-template-columns: 1fr; }
+      .nav span { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="intro">
+      <div>
+        <h1>Homepage structure preview: less text, less AI</h1>
+        <p>These are preview-only layout directions. The goal is to keep trust and GEO value, but make the page feel more human: fewer explanations, stronger choices, clearer next steps.</p>
+      </div>
+      <div class="logo-box">
+        <img src="../public/images/angel-doctor-logo.png" alt="Angel Doctor logo" />
+      </div>
+    </section>
+
+    <section class="rule-list">
+      <div><strong>Cut paragraphs</strong>Use one short idea per section.</div>
+      <div><strong>Lead with choices</strong>Let users pick treatment, city, or support need.</div>
+      <div><strong>Keep proof compact</strong>Use trust facts once, not repeatedly.</div>
+      <div><strong>Move detail down</strong>Use FAQs and guides for long explanations.</div>
+    </section>
+
+    <section class="options">
+      <article class="option">
+        <div class="option-head">
+          <p class="label">Option 1</p>
+          <h2>Decision-first homepage</h2>
+          <p>Best if you want the homepage to convert quickly. It asks the visitor what they need, then routes them to care plan, treatment, escort, or pricing.</p>
+        </div>
+        <div class="screen">
+          <div class="nav">
+            <div class="brand"><img src="../public/images/angel-doctor-logo.png" alt="Angel Doctor" /><small>China Healthcare, Guided End to End</small></div>
+            <span>Treatments</span><span>Destinations</span><span>Guides</span>
+            <button class="cta">Get Your Care Plan</button>
+          </div>
+          <div class="hero hero-grid">
+            <div>
+              <p class="kicker">Medical travel in China, made easier</p>
+              <h3>What kind of care do you need in China?</h3>
+              <p class="short-copy">Get matched with suitable providers, visit preparation, and local hospital support when you need it.</p>
+              <button class="cta">Get Your Care Plan</button>
+              <div class="micro-trust"><span>200+ providers</span><span>600+ trained escorts</span><span>English support</span></div>
+            </div>
+            <div class="panel">
+              <h4>Start with one answer</h4>
+              <div class="choice">Dental or checkup <span class="arrow">→</span><small>Compare common short-stay options</small></div>
+              <div class="choice">Need a second opinion <span class="arrow">→</span><small>Prepare records and review pathway</small></div>
+              <div class="choice">Already visiting a hospital <span class="arrow">→</span><small>Book local medical escort support</small></div>
+              <div class="choice">Not sure where to go <span class="arrow">→</span><small>Choose city and provider type</small></div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-title"><h4>Popular starting points</h4><a>View all treatments</a></div>
+            <div class="tiles">
+              <div class="tile"><strong>Dental Care</strong><p>For implants, crowns, veneers, and checkups.</p></div>
+              <div class="tile"><strong>Health Checkup</strong><p>For screening, imaging, blood tests, and report support.</p></div>
+              <div class="tile"><strong>Local Escort</strong><p>For registration, navigation, translation, and payment guidance.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="summary">
+          <h4>Recommended changes</h4>
+          <ul>
+            <li>Replace long hero paragraph with one direct question.</li>
+            <li>Turn the right care-plan panel into a routing module.</li>
+            <li>Move long process detail into How It Works and FAQs.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="option">
+        <div class="option-head">
+          <p class="label">Option 2</p>
+          <h2>Concierge journey homepage</h2>
+          <p>Best if you want the brand to feel premium and reassuring. Less directory, more guided service. Strong for trust and high-intent patients.</p>
+        </div>
+        <div class="screen">
+          <div class="nav">
+            <div class="brand"><img src="../public/images/angel-doctor-logo.png" alt="Angel Doctor" /><small>China Healthcare, Guided End to End</small></div>
+            <span>How It Works</span><span>Pricing</span><span>Trust</span>
+            <button class="cta">Get Your Care Plan</button>
+          </div>
+          <div class="hero hero-grid">
+            <div>
+              <p class="kicker">Care coordination, not guesswork</p>
+              <h3>A calmer way to access healthcare in China.</h3>
+              <p class="short-copy">Tell us what you need. Angel Doctor helps you plan the visit, understand options, and arrange local support.</p>
+              <button class="cta">Get Your Care Plan</button>
+              <div class="micro-trust"><span>No medical records required first</span><span>Clear non-clinical scope</span></div>
+            </div>
+            <div class="quote-card">
+              <strong>Before you travel, know your next step.</strong>
+              <p>Provider type, city fit, appointment preparation, escort support, and expected cost components are clarified before you commit.</p>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-title"><h4>Three moments we support</h4><a>See process</a></div>
+            <div class="timeline">
+              <div class="step"><b>01</b><p>Plan care options</p></div>
+              <div class="step"><b>02</b><p>Prepare the visit</p></div>
+              <div class="step"><b>03</b><p>Navigate hospital day</p></div>
+              <div class="step"><b>04</b><p>Coordinate follow-up</p></div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="tiles">
+              <div class="tile"><strong>What Angel Doctor does</strong><p>Coordination, matching, escort support, communication help.</p></div>
+              <div class="tile"><strong>What doctors decide</strong><p>Diagnosis, treatment plans, prescriptions, procedures.</p></div>
+              <div class="tile"><strong>What patients control</strong><p>City, timeline, budget comfort, support needs.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="summary">
+          <h4>Recommended changes</h4>
+          <ul>
+            <li>Use short service moments instead of explaining every feature.</li>
+            <li>Put medical boundaries into one elegant comparison block.</li>
+            <li>Reduce “AI-assisted” emphasis above the fold.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="option">
+        <div class="option-head">
+          <p class="label">Option 3</p>
+          <h2>Destination and treatment finder</h2>
+          <p>Best if GEO and SEO are the priority. It still feels lighter because the homepage becomes an interactive-looking finder, not a long brochure.</p>
+        </div>
+        <div class="screen">
+          <div class="nav">
+            <div class="brand"><img src="../public/images/angel-doctor-logo.png" alt="Angel Doctor" /><small>China Healthcare, Guided End to End</small></div>
+            <span>Treatments</span><span>Destinations</span><span>Guides</span>
+            <button class="cta">Get Your Care Plan</button>
+          </div>
+          <div class="hero hero-grid">
+            <div>
+              <p class="kicker">Find your care route</p>
+              <h3>Choose a treatment. Choose a city. Get support.</h3>
+              <p class="short-copy">A practical starting point for dental care, checkups, second opinions, TCM recovery, and local hospital support in China.</p>
+              <button class="cta">Get Your Care Plan</button>
+            </div>
+            <div class="panel">
+              <h4>Quick finder</h4>
+              <div class="finder">
+                <div class="row"><div>Dental care</div><span class="tag">Shenzhen</span></div>
+                <div class="row"><div>Executive checkup</div><span class="tag">Shanghai</span></div>
+                <div class="row"><div>TCM recovery</div><span class="tag">Guangzhou</span></div>
+                <div class="row"><div>Second opinion</div><span class="tag">Beijing</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-title"><h4>Browse by need</h4><a>Compare destinations</a></div>
+            <div class="tiles">
+              <div class="tile"><strong>Short-stay visitors</strong><p>Dental, checkup, TCM, and local escort support.</p></div>
+              <div class="tile"><strong>Overseas families</strong><p>Hospital navigation and communication support in China.</p></div>
+              <div class="tile"><strong>Complex cases</strong><p>Second opinion coordination and preparation guidance.</p></div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-title"><h4>Keep detail where it belongs</h4><a>Read guides</a></div>
+            <div class="tiles">
+              <div class="tile"><strong>Cost factors</strong><p>Pricing components without fake fixed prices.</p></div>
+              <div class="tile"><strong>Hospital access</strong><p>How foreigners can enter China’s care system.</p></div>
+              <div class="tile"><strong>Escort service</strong><p>What local support can and cannot do.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="summary">
+          <h4>Recommended changes</h4>
+          <ul>
+            <li>Make homepage an entry hub, not a full explanation page.</li>
+            <li>Keep city and treatment links visible for GEO without long paragraphs.</li>
+            <li>Move detailed education into Guides and destination pages.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

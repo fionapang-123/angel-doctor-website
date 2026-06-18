@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why China? — Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f8fafb;
+    padding: 60px 24px;
+    color: #1f2124;
+  }
+  .wrap { max-width: 1050px; margin: 0 auto; }
+  .label {
+    font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.18em; color: #e628a8; text-align: center; margin-bottom: 16px;
+  }
+  h1 { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .sub { text-align: center; color: #5b6675; font-size: 16px; margin-bottom: 48px; }
+  .grid { display: grid; gap: 24px; }
+  @media (min-width: 800px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    background: white;
+    border: 1px solid #e4e8ed;
+    border-radius: 16px;
+    padding: 28px 20px 24px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+  .card img { width: 100%; max-width: 300px; height: auto; margin-bottom: 20px; border-radius: 12px; }
+  .card h3 { font-size: 18px; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: #5b6675; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="label">Why China?</p>
+  <h1>Fast Access. Lower Cost. World-Class Hospitals.</h1>
+  <p class="sub">Three data-backed reasons international patients choose China</p>
+  <div class="grid">
+    <div class="card">
+      <img src="speed.svg" alt="Get care sooner">
+      <h3>Get care sooner</h3>
+      <p>3–6 month wait in Western healthcare systems → <strong>1–2 weeks</strong> in China</p>
+    </div>
+    <div class="card">
+      <img src="cost.svg" alt="Pay significantly less">
+      <h3>Pay significantly less</h3>
+      <p>Dental implants <strong>60–80% less</strong> than US/UK — same implant materials, licensed providers</p>
+    </div>
+    <div class="card">
+      <img src="quality.svg" alt="No compromise on quality">
+      <h3>No compromise on quality</h3>
+      <p>China's top public tertiary hospitals — JCI-accredited departments, international patient centers</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
