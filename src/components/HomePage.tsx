@@ -1,14 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, HeartHandshake, Languages, ShieldCheck, ClipboardList, MapPinned, CalendarClock, Building2, Stethoscope, Sparkles, Users, FileText, LineChart } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import Image from "next/image";
+import { ArrowRight, Building2, CheckCircle2, Stethoscope, Sparkles, Users, FileText, LineChart, HeartHandshake, Languages, ShieldCheck } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
-import { TrustBar } from "@/components/TrustBar";
 import { FAQBlock } from "@/components/FAQBlock";
-import { DisclaimerBlock } from "@/components/DisclaimerBlock";
 import { CTASection } from "@/components/CTASection";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { SchemaJsonLd } from "@/components/SchemaJsonLd";
-import { Badge } from "@/components/ui/badge";
+import { EscortScenesCarousel } from "@/components/EscortScenesCarousel";
 import { createPageSchema } from "@/config/schema";
 import type { FaqItem, LinkItem, PageContent } from "@/types/page";
 
@@ -20,60 +18,107 @@ const treatments = [
     body: "Short-stay dental evaluation, implants, crowns, veneers, checkups, and treatment planning with provider matching and local support.",
     href: "/treatments/dental-care-china",
     icon: Stethoscope,
+    image: "/images/treatments/dental-care-china-consultation.webp",
+    imageAlt: "Dental care consultation and local medical escort support for international patients in China",
   },
   {
     title: "Health Checkup",
     body: "Preventive screening, imaging, blood tests, executive checkups, and report explanation support across Chinese cities.",
     href: "/treatments/health-checkup-china",
     icon: LineChart,
+    image: "/images/treatments/health-checkup-china-imaging-support.webp",
+    imageAlt: "Health checkup imaging support and care coordination for international patients in China",
   },
   {
     title: "Second Opinion",
     body: "Medical record preparation, department matching, specialist review coordination, and follow-up communication support.",
     href: "/treatments/medical-second-opinion-china",
     icon: FileText,
+    image: "/images/escort-scenes/international-patient-lounge-support.png",
+    imageAlt: "Medical second opinion coordination and patient support in China",
   },
   {
     title: "TCM Recovery",
     body: "Acupuncture, pain relief, sleep support, fatigue recovery, stress recovery, and wellness-oriented TCM programs.",
     href: "/treatments/tcm-recovery-china",
     icon: Sparkles,
+    image: "/images/treatments/tcm-recovery-china-cupping-support.webp",
+    imageAlt: "TCM recovery and pain relief support for international patients in China",
   },
 ];
 
-const escortPillars = [
-  { label: "Training system", desc: "Escorts follow a structured process covering hospital workflow, patient communication, privacy rules, and escalation procedures." },
-  { label: "Service standards", desc: "Defined support tasks, clear service boundaries, and documented expectations for every visit." },
-  { label: "Backend coordination", desc: "Angel Doctor coordinates patient needs, city selection, appointment preparation, escort assignment, and follow-up." },
-  { label: "Privacy agreements", desc: "Patient information and medical inquiry details are handled under clear data protection rules." },
-  { label: "Complaint handling", desc: "Patients can raise issues, request follow-up, or report service problems through the system." },
-  { label: "Emergency escalation", desc: "Urgent issues during service can be escalated internally. For medical emergencies, contact local emergency services immediately." },
+const escortScenes = [
+  {
+    title: "Real local escort team",
+    body: "Angel Doctor employees support international patients with hospital visit logistics, communication, and local coordination in China.",
+    image: "/images/escort-scenes/angel-doctor-real-medical-escort-team-china.jpg",
+    alt: "Angel Doctor real local medical escort team supporting international patients in China",
+  },
+  {
+    title: "Reception and visit support",
+    body: "Meet trained care coordinators who help with arrival, clinic flow, translation support, and practical visit tasks.",
+    image: "/images/escort-scenes/angel-doctor-real-local-escort-reception-china.jpg",
+    alt: "Angel Doctor local medical escort employees at a reception desk in China",
+  },
+  {
+    title: "Arrival coordination",
+    body: "Meet your escort, confirm the visit plan, and understand where to go first.",
+    image: "/images/escort-scenes/medical-travel-arrival-coordination-china.png",
+    alt: "Angel Doctor medical travel arrival coordination in China",
+  },
+  {
+    title: "Hospital navigation",
+    body: "Move through registration, departments, payment desks, and examination areas with local support.",
+    image: "/images/escort-scenes/china-medical-escort-hospital-navigation.png",
+    alt: "Medical escort guiding an international patient through a hospital in China",
+  },
+  {
+    title: "Doctor communication",
+    body: "Support communication during provider visits while clinical decisions remain with licensed clinicians.",
+    image: "/images/escort-scenes/hospital-consultation-communication-support.png",
+    alt: "Medical escort supporting doctor communication with international patients",
+  },
+  {
+    title: "Checkup guidance",
+    body: "Navigate screening steps, examination routing, report collection, and follow-up coordination.",
+    image: "/images/escort-scenes/international-patient-checkup-guidance-china.png",
+    alt: "Medical escort helping an international patient with a health checkup in China",
+  },
+  {
+    title: "Visit support",
+    body: "Coordinate waiting, clinic flow, basic logistics, and patient questions during the visit.",
+    image: "/images/escort-scenes/international-patient-lounge-support.png",
+    alt: "International patient receiving lounge support from a medical escort",
+  },
+  {
+    title: "Practical care tasks",
+    body: "Help with non-clinical visit tasks such as routing, payment guidance, and report pickup.",
+    image: "/images/escort-scenes/patient-meal-guidance-support-china.png",
+    alt: "Angel Doctor escort supporting practical patient care tasks in China",
+  },
 ];
 
 const steps = [
-  { step: "1", title: "Share Your Care Request", body: "Tell us your treatment interest, preferred city, timeline, contact details, and whether you need local support." },
-  { step: "2", title: "Review Care Options", body: "Angel Doctor helps compare suitable provider types, expected timelines, support needs, and pricing factors." },
-  { step: "3", title: "Visit With Local Support", body: "A trained medical escort may help with registration, navigation, communication, payment guidance, and report collection." },
-  { step: "4", title: "Continue Follow-Up", body: "After your visit, Angel Doctor supports follow-up communication, report coordination, and next-step planning where available." },
+  { step: "1", title: "Tell us the need", body: "City, timing, care interest, and support needs." },
+  { step: "2", title: "Compare options", body: "Understand provider type, pathway, and preparation." },
+  { step: "3", title: "Prepare the visit", body: "Coordinate schedule, documents, and local support." },
+  { step: "4", title: "Go with support", body: "Escort assistance during the hospital or clinic visit." },
 ];
 
 const destinations = [
   {
     city: "Shenzhen",
-    badge: "Dental · Checkups · TCM",
-    body: "Convenient for dental care, health checkups, TCM recovery, and cross-border access from Hong Kong. English-speaking medical escort support available.",
+    body: "Dental care, health checkups, TCM recovery, and cross-border access from Hong Kong.",
     href: "/destinations/shenzhen-medical-travel",
   },
   {
     city: "Guangzhou",
-    badge: "TCM · Rehab · Specialist",
-    body: "A southern China medical hub for TCM recovery, rehabilitation, health checkups, and specialist hospital coordination.",
+    body: "A southern China hub for TCM recovery, rehabilitation, health checkups, and specialist coordination.",
     href: "/destinations/guangzhou-medical-travel",
   },
   {
     city: "Shanghai",
-    badge: "Executive Checkup · Second Opinion · Private",
-    body: "Suitable for executive health checkups, international clinics, specialist second opinions, and private healthcare access.",
+    body: "Executive health checkups, international clinics, second opinions, and private healthcare access.",
     href: "/destinations/shanghai-medical-travel",
   },
 ];
@@ -87,11 +132,43 @@ const whyAngel = [
   { title: "English-Speaking Support", body: "Coordination, translation support, and communication assistance available in English and Chinese throughout the care journey.", icon: Languages },
 ];
 
-const pricingComponents = [
-  { label: "Hospital / Provider Medical Fees", desc: "Paid directly by the patient to the hospital, clinic, or healthcare provider at the time of service." },
-  { label: "Angel Doctor Coordination Fees", desc: "Care planning, hospital matching, appointment preparation, and communication support throughout your journey." },
-  { label: "Medical Escort Fees", desc: "In-hospital or in-clinic local support during your visit — registration, navigation, translation, and payment guidance." },
-  { label: "Travel & Accommodation", desc: "Flights, hotels, local transportation, and personal travel costs are separate from medical and coordination costs." },
+const servicePackages = [
+  {
+    name: "Care Navigation",
+    price: "Free + $39",
+    desc: "Start with lightweight guidance, then add appointment preparation when you are ready.",
+    features: [
+      "Free dental pre-check",
+      "Hospital or provider matching guidance",
+      "Appointment help and visit checklist",
+      "English coordination before the visit",
+    ],
+    cta: "carePlan" as const,
+  },
+  {
+    name: "In-Hospital Support",
+    price: "From $149",
+    desc: "A trained local medical escort joins you during a hospital or clinic visit in China.",
+    features: [
+      "Local medical escort support",
+      "Registration and payment assistance",
+      "Clinic navigation and department routing",
+      "Communication support and report collection",
+    ],
+    cta: "escort" as const,
+  },
+  {
+    name: "Treatment Concierge",
+    price: "From $499",
+    desc: "For complex treatment planning, multiple provider options, or multi-visit coordination.",
+    features: [
+      "Multi-provider comparison",
+      "Timeline and visit planning",
+      "Treatment option coordination",
+      "Extended follow-up support",
+    ],
+    cta: "carePlan" as const,
+  },
 ];
 
 const guideCards = [
@@ -134,8 +211,8 @@ const homePage: PageContent = {
   slug: "/",
   title: "Angel Doctor | Medical Travel to China for International Patients",
   description: "Access healthcare options in China with Angel Doctor hospital matching, transparent coordination, and trained local medical escort support.",
-  h1: "Fast Care. Fair Price. Clear Guidance.",
-  intro: "Angel Doctor helps international patients understand healthcare options in China through AI-assisted matching, transparent coordination, and trained local medical escorts.",
+  h1: "Efficient care. Fair price. Clear guidance.",
+  intro: "Angel Doctor helps international patients plan hospital visits, compare care options, and arrange trained local medical escorts in China.",
   kind: "webpage",
   cta: "carePlan",
   secondaryCta: "escort",
@@ -153,128 +230,234 @@ export function HomePage() {
       <SchemaJsonLd data={createPageSchema(homePage)} />
 
       {/* 1. Hero */}
-      <section className="relative overflow-hidden border-b border-line">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(235,245,255,0.9),transparent)]" />
-        <div className="pointer-events-none absolute -left-32 top-20 size-64 rounded-full bg-blush/60 blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 top-40 size-80 rounded-full bg-primary/[0.03] blur-3xl" />
-        <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-24 lg:pt-14">
-          <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-            <div className="flex flex-col gap-7">
-              <div className="flex flex-col gap-6">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-                  International Healthcare Coordination
-                </p>
-                <h1 className="max-w-3xl font-sora text-hero-mobile font-semibold leading-[1.1] tracking-tight text-foreground sm:text-hero sm:leading-[1.08]">
-                  Fast Care. Fair Price.<br />
-                  Clear Guidance.
-                </h1>
-                <p className="max-w-xl text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
-                  Angel Doctor coordinates your full care journey in China — from provider matching and appointment preparation, to in-hospital support with a trained local medical escort, through to follow-up after you return home.
-                </p>
+      <section className="relative isolate min-h-[680px] overflow-hidden border-b border-white/10 bg-[#101828] sm:min-h-[700px] lg:min-h-[720px]">
+        <video
+          aria-hidden="true"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/videos/angel-doctor-hero-hospital-access-poster.jpg"
+          className="absolute inset-0 -z-30 hidden h-full w-full object-cover md:block"
+        >
+          <source src="/videos/angel-doctor-hero-hospital-access.mp4" type="video/mp4" />
+        </video>
+        <Image
+          src="/videos/angel-doctor-hero-hospital-access-poster.jpg"
+          alt=""
+          width={1280}
+          height={720}
+          aria-hidden="true"
+          className="hero-video-poster absolute inset-0 -z-30 hidden h-full w-full object-cover"
+        />
+        <Image
+          src="/videos/angel-doctor-hero-mobile-escort.jpg"
+          alt="Angel Doctor local medical escort guiding an international patient in a Chinese hospital lobby"
+          width={1536}
+          height={865}
+          priority
+          className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center] md:hidden"
+        />
+        <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(8,13,24,0.94)_0%,rgba(8,13,24,0.82)_38%,rgba(8,13,24,0.42)_68%,rgba(8,13,24,0.74)_100%)]" />
+        <div className="absolute inset-x-0 top-0 -z-20 h-44 bg-[linear-gradient(180deg,rgba(8,13,24,0.72)_0%,rgba(8,13,24,0)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 -z-20 h-2/3 bg-[linear-gradient(0deg,rgba(8,13,24,0.98)_0%,rgba(8,13,24,0.72)_42%,rgba(8,13,24,0)_100%)]" />
+
+        <div className="relative mx-auto flex min-h-[680px] max-w-7xl flex-col px-4 pb-7 pt-8 sm:min-h-[700px] sm:px-6 lg:min-h-[720px] lg:px-8 lg:pt-10">
+          <div className="pointer-events-none absolute left-4 right-4 top-32 z-10 hidden sm:left-6 sm:right-6 sm:top-40 md:block lg:left-8 lg:right-8 lg:top-52">
+            <h1 className="max-w-[690px] font-sora text-[3rem] font-extrabold leading-[1.06] tracking-normal text-white sm:text-[4rem] lg:text-[4.75rem] xl:text-[5.25rem]">
+              <span className="block">Efficient care.</span>
+              <span className="block text-white/82">Fair price.</span>
+              <span className="block">Clear guidance.</span>
+            </h1>
+          </div>
+
+          <div className="relative z-10 mt-auto pb-2 md:hidden">
+            <div className="font-sora text-[2.85rem] font-extrabold leading-[1.04] tracking-normal text-white">
+              <span className="block">Efficient Care.</span>
+                <span className="block text-white/80">Fair Price.</span>
+                <span className="block">Clear Guidance.</span>
               </div>
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <CTAButton cta="carePlan" />
+              <p className="mt-5 max-w-[21rem] text-base leading-7 text-white/80">
+                Access China healthcare with hospital coordination and local medical escort support.
+              </p>
+              <div className="mt-6">
+                <CTAButton cta="carePlan" className="w-full !bg-white !text-foreground shadow-[0_18px_42px_rgba(0,0,0,0.22)] hover:!bg-white/90 [&_svg]:!text-foreground" />
+              </div>
+              <div className="mb-10 mt-4 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-[12px] font-semibold leading-5 text-white/80 shadow-soft backdrop-blur-md">
+                Healthcare group background · 200+ providers · 600+ trained escorts
+              </div>
+          </div>
+
+          <div className="relative z-10 mt-auto hidden gap-3 pt-[23rem] sm:grid-cols-2 sm:pt-[28rem] md:grid lg:grid-cols-4 lg:pt-[24rem]">
+            {[
+              ["1998", "Healthcare group background"],
+              ["200+", "Hospitals and healthcare providers"],
+              ["600+", "Trained local medical escorts"],
+              ["EN / CN", "English and Chinese support"],
+            ].map(([value, label]) => (
+              <div key={value} className="rounded-xl border border-white/20 bg-white/10 p-5 shadow-soft backdrop-blur-md">
+                <p className="font-sora text-3xl font-semibold leading-none text-white">{value}</p>
+                <p className="mt-2 text-sm leading-5 text-white/70">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Core Service */}
+      <section className="mx-auto max-w-7xl px-4 py-18 sm:px-6 lg:px-8 reveal-on-scroll">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div className="overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+            <Image
+              src="/images/escort-scenes/hospital-consultation-communication-support.png"
+              alt="Angel Doctor coordinating communication between international patients and a healthcare provider in China"
+              width={1535}
+              height={1024}
+              className="aspect-[4/3] w-full object-cover"
+            />
+          </div>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Core Service</p>
+            <h2 className="mt-4 max-w-2xl font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
+              China Healthcare, Guided End to End
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-8 text-muted">
+              Compare options, prepare visits, coordinate appointments, and arrange local support in China.
+            </p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {[
+                "Hospital and provider matching",
+                "Visit preparation and coordination",
+                "Local medical escort support",
+                "Follow-up communication support",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-2.5 rounded-lg border border-line bg-surface px-4 py-3 text-sm font-medium text-foreground shadow-soft">
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                  {item}
                 </div>
-              </div>
+              ))}
             </div>
-            <div className="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-soft sm:p-8">
-              <div className="pointer-events-none absolute -right-8 -top-8 size-28 rounded-full bg-blush/80" />
-              <div className="relative">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
-                    <ClipboardList aria-hidden="true" className="size-4 text-primary" />
-                  </div>
-                  <p className="text-sm font-semibold text-foreground">Your Care Plan</p>
-                </div>
-                <p className="mt-4 text-[13px] leading-6 text-muted">
-                  A structured coordination process to help you access healthcare in China with confidence.
-                </p>
-                <div className="mt-5 space-y-4">
-                  {[
-                    { step: "1", label: "Needs & Matching", desc: "Hospital and provider options based on your treatment type, city, and timeline." },
-                    { step: "2", label: "Visit Preparation", desc: "Appointment coordination, pricing guidance, and what to expect on the day." },
-                    { step: "3", label: "Local Medical Escort", desc: "A trained escort supports in-hospital navigation, translation, and payments." },
-                    { step: "4", label: "Follow-Up", desc: "Post-visit communication and next-step planning." },
-                  ].map((s) => (
-                    <div key={s.step} className="flex gap-3">
-                      <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">{s.step}</span>
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{s.label}</p>
-                        <p className="mt-0.5 text-xs leading-5 text-muted">{s.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <CTAButton cta="carePlan" />
+              <CTAButton cta="escort" variant="secondary" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Trust Bar */}
-      <TrustBar />
-
-      {/* 3. China Healthcare, Guided End to End */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Guided Care</p>
-          <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
-            China Healthcare, Guided End to End
-          </h2>
-          <p className="mt-5 text-[15px] leading-7 text-muted">
-            Angel Doctor doesn't just match you with a hospital and disappear. We coordinate your entire care journey — from understanding your options and preparing for your visit, to in-hospital support with a trained medical escort, through to follow-up communication after you return home.
-          </p>
-        </div>
-        <div className="mt-14 grid gap-10 sm:grid-cols-3">
-          <div className="flex flex-col items-center text-center">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-blush ring-1 ring-primary/5">
-              <ClipboardList className="size-6 text-primary" />
+      {/* 3. Medical Escort Scenes */}
+      <section className="border-y border-line bg-mist/70 py-18 reveal-on-scroll sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">600+ Trained Escorts</p>
+              <h2 className="mt-4 max-w-3xl font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
+                Local medical escorts, managed as a service.
+              </h2>
             </div>
-            <h3 className="mt-5 text-lg font-semibold text-foreground">Before Your Visit</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">You tell us your treatment goals and preferred city. We match you with suitable providers, coordinate appointments, and give you clear pricing guidance — all before you travel.</p>
-          </div>
-          <div className="flex flex-col items-center text-center">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-blush ring-1 ring-primary/5">
-              <MapPinned className="size-6 text-primary" />
-            </div>
-            <h3 className="mt-5 text-lg font-semibold text-foreground">During Your Visit</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">You'll have a trained medical escort at your side — handling registration, navigation, communication, and payments so you can focus on your care.</p>
-          </div>
-          <div className="flex flex-col items-center text-center">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-blush ring-1 ring-primary/5">
-              <CalendarClock className="size-6 text-primary" />
-            </div>
-            <h3 className="mt-5 text-lg font-semibold text-foreground">After Your Visit</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">Follow-up communication, report coordination, next-step planning, and continued support where available.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Popular Treatments */}
-      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What we can coordinate for you</p>
-            <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Popular Treatments</h2>
-            <p className="mt-5 text-[15px] leading-7 text-muted">
-              Angel Doctor currently supports coordination for dental care, health checkups, medical second opinions, and TCM recovery in China.
+            <p className="max-w-md text-sm leading-6 text-muted">
+              Non-clinical hospital support with clear medical boundaries.
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+          <EscortScenesCarousel scenes={escortScenes} />
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <CTAButton
+              cta="escort"
+              className="!bg-primary !text-white shadow-button hover:!bg-primary-strong [&_svg]:!text-white"
+            />
+            <CTAButton cta="carePlan" variant="secondary" />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Service Pricing */}
+      <section className="mx-auto max-w-7xl px-4 py-18 sm:px-6 lg:px-8 reveal-on-scroll">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Service Fees</p>
+          <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
+            Clear Service Fees Before You Commit
+          </h2>
+          <p className="mt-5 text-[15px] leading-7 text-muted">
+            Angel Doctor service fees are separate from hospital and provider medical fees.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          {servicePackages.map((pkg) => (
+            <article
+              key={pkg.name}
+              className="flex h-full flex-col rounded-xl border border-line bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-card sm:p-7"
+            >
+              <h3 className="font-sora text-2xl font-semibold text-foreground">{pkg.name}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted">{pkg.desc}</p>
+              <div className="mt-6">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted">Starting at</p>
+                <p className="mt-2 font-sora text-4xl font-semibold leading-none text-foreground">{pkg.price}</p>
+              </div>
+              <ul className="mt-7 flex-1 space-y-3">
+                {pkg.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2.5 text-sm leading-6 text-muted">
+                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <CTAButton cta={pkg.cta} className="w-full" />
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 rounded-xl border border-line bg-white p-5 text-center shadow-soft">
+          <p className="text-sm leading-6 text-muted">
+            Medical fees are paid directly to providers. Angel Doctor does not publish fake fixed treatment prices or guarantee outcomes.
+          </p>
+          <Link href="/pricing" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary-strong">
+            View full pricing guidance <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+      </section>
+
+      {/* 5. Popular Treatments */}
+      <section className="border-y border-line bg-mist/70 reveal-on-scroll">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">What we can coordinate for you</p>
+            <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Popular Treatments</h2>
+            <p className="mt-5 text-[15px] leading-7 text-muted">
+              Start with the care need that matches your trip.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {treatments.map((t) => {
               const Icon = t.icon;
               return (
                 <Link key={t.href} href={t.href} className="group block">
-                  <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/15 hover:shadow-card">
-                    <div className="flex size-12 items-center justify-center rounded-xl bg-blush ring-1 ring-primary/5">
-                      <Icon className="size-5 text-primary" />
+                  <div className="flex h-full flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-card">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-mist">
+                      <Image
+                        src={t.image}
+                        alt={t.imageAlt}
+                        width={768}
+                        height={576}
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(0deg,rgba(16,24,40,0.48)_0%,rgba(16,24,40,0)_100%)]" />
                     </div>
-                    <h3 className="mt-5 text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{t.title}</h3>
-                    <p className="mt-3 flex-1 text-sm leading-6 text-muted">{t.body}</p>
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-primary-strong transition-colors">
-                      Learn more <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex size-10 items-center justify-center rounded-lg bg-primary-soft ring-1 ring-primary/10">
+                        <Icon className="size-4.5 text-primary" />
+                      </div>
+                      <h3 className="mt-4 font-sora text-xl font-semibold leading-tight text-foreground">{t.title}</h3>
+                      <p className="mt-3 flex-1 text-sm leading-6 text-muted">{t.body}</p>
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors group-hover:text-primary-strong">
+                        Learn more <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
                   </div>
                 </Link>
               );
@@ -288,53 +471,21 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 5. Standardized Medical Escort Network */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">600+ Trained Escorts</p>
-            <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
-              Standardized Medical Escort Network
-            </h2>
-            <p className="mt-5 text-[15px] leading-7 text-muted">
-              Angel Doctor's 600+ medical escorts are not casual freelancers or temporary helpers. They are part of a trained, managed, and standardized offline service network designed to support international patients inside Chinese hospitals and clinics.
-            </p>
-            <p className="mt-4 text-sm leading-7 text-muted">
-              Every escort operates within a defined non-clinical service scope: registration assistance, department navigation, communication support, payment guidance, examination routing, pharmacy guidance, report collection, and follow-up coordination. Medical diagnosis and treatment decisions remain with licensed healthcare providers.
-            </p>
-            <div className="mt-7">
-              <CTAButton cta="escort" />
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {escortPillars.map((p) => (
-              <div key={p.label} className="rounded-xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 hover:border-primary/10">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <BadgeCheck className="size-4 text-primary shrink-0" />
-                  {p.label}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-muted">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. How It Works */}
-      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
+      {/* 5. How It Works */}
+      <section className="border-y border-line bg-mist/70 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Process</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Process</p>
             <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">How It Works</h2>
             <p className="mt-5 text-[15px] leading-7 text-muted">
-              A structured coordination process — before, during, and after your hospital or clinic visit in China.
+              Before, during, and after your visit in China.
             </p>
           </div>
-          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid overflow-hidden rounded-xl border border-line bg-white shadow-soft sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s) => (
-              <div key={s.step} className="relative flex flex-col items-center text-center">
-                <div className="flex size-12 items-center justify-center rounded-full bg-primary text-lg font-bold text-white shadow-button">{s.step}</div>
-                <h3 className="mt-5 text-lg font-semibold text-foreground">{s.title}</h3>
+              <div key={s.step} className="border-b border-line p-6 last:border-b-0 sm:[&:nth-child(2)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0">
+                <div className="text-sm font-bold text-primary">0{s.step}</div>
+                <h3 className="mt-8 text-lg font-semibold text-foreground">{s.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-muted">{s.body}</p>
               </div>
             ))}
@@ -350,24 +501,25 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 7. Featured Destinations */}
+      {/* 6. Featured Destinations */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Cities</p>
-          <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Featured Medical Destinations</h2>
-          <p className="mt-5 text-[15px] leading-7 text-muted">
-            Coming from Hong Kong? Shenzhen is 40 minutes away. Need a health checkup before your next trip? We'll help you find the right city for your treatment.
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Cities</p>
+            <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Featured Medical Destinations</h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-muted">
+            Compare cities by care type, timing, and local support.
           </p>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {destinations.map((d) => (
             <Link key={d.city} href={d.href} className="group block">
-              <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/15 hover:shadow-card">
-                <Badge variant="secondary" className="w-fit">{d.badge}</Badge>
-                <h3 className="mt-4 font-sora text-xl font-semibold text-foreground group-hover:text-primary transition-colors">{d.city}</h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-muted">{d.body}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-primary-strong transition-colors">
-                  View {d.city} medical travel <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+              <div className="flex h-full flex-col rounded-xl border border-line bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-card">
+                <h3 className="font-sora text-2xl font-semibold text-foreground">{d.city}</h3>
+                <p className="mt-4 flex-1 text-sm leading-6 text-muted">{d.body}</p>
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors group-hover:text-primary-strong">
+                  View city guide <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                 </span>
               </div>
             </Link>
@@ -380,22 +532,22 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 8. Why Angel Doctor */}
-      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
+      {/* 7. Why Angel Doctor */}
+      <section className="border-y border-line bg-mist/70 reveal-on-scroll">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why Angel Doctor</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Why Angel Doctor</p>
             <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Why International Patients Choose Angel Doctor</h2>
             <p className="mt-5 text-[15px] leading-7 text-muted">
-              Not just hospital access. A combination of AI-assisted matching, transparent planning, standardized local escorts, and clear medical boundaries.
+              Matching, planning, local escorts, and clear medical boundaries.
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {whyAngel.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="flex gap-4 rounded-2xl border border-line bg-surface p-6 shadow-soft transition-all duration-200 hover:border-primary/10">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-blush ring-1 ring-primary/5">
+                <div key={item.title} className="flex gap-4 rounded-xl border border-line bg-white p-6 shadow-soft transition-all duration-200 hover:border-primary/20">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary-soft ring-1 ring-primary/10">
                     <Icon className="size-5 text-primary" />
                   </div>
                   <div>
@@ -410,51 +562,29 @@ export function HomePage() {
             <Link href="/why-angel-doctor" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary-strong">
               Learn more about Angel Doctor <ArrowRight className="size-3.5" />
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 9. Pricing Transparency */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 reveal-on-scroll">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Cost Guidance</p>
-          <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Pricing Transparency</h2>
-          <p className="mt-5 text-[15px] leading-7 text-muted">
-            Angel Doctor explains cost components clearly. We don't publish fake fixed prices, and we don't claim to be the cheapest option. We help you understand what goes into the total cost.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {pricingComponents.map((pc) => (
-            <div key={pc.label} className="rounded-2xl border border-line bg-surface p-6 shadow-soft transition-all duration-200 hover:border-primary/10">
-              <h3 className="text-lg font-semibold text-foreground">{pc.label}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted">{pc.desc}</p>
-            </div>
-          ))}
-        </div>
-        <p className="mt-10 text-center text-sm leading-6 text-muted">
-          Estimated costs depend on provider confirmation, diagnosis, treatment plan, materials, doctor availability, medical record review, city preference, timeline, and follow-up needs.
-        </p>
-        <div className="mt-6 text-center">
-          <Link href="/pricing" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary-strong">
-            Get an estimated cost range <ArrowRight className="size-3.5" />
-          </Link>
-        </div>
-      </section>
-
-      {/* 10. Featured Guides */}
-      <section className="border-y border-line bg-mist/40 reveal-on-scroll">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Guides</p>
-            <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Featured Guides</h2>
-            <p className="mt-5 text-[15px] leading-7 text-muted">
-              Educational content to help you understand healthcare options in China before reaching out. Guides are designed to answer common questions and support informed decisions.
+            <p className="mt-3">
+              <Link href="/why-angel-doctor#brand-film" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-primary">
+                Watch the Jumper brand film <ArrowRight className="size-3.5" />
+              </Link>
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+        </div>
+      </section>
+
+      {/* 9. Featured Guides */}
+      <section className="border-y border-line bg-mist/70 reveal-on-scroll">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Guides</p>
+            <h2 className="mt-4 font-sora text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Featured Guides</h2>
+            <p className="mt-5 text-[15px] leading-7 text-muted">
+              Practical guides for planning healthcare in China.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2">
             {guideCards.map((g) => (
               <Link key={g.href} href={g.href} className="group block">
-                <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/15 hover:shadow-card">
+                <div className="flex h-full flex-col rounded-xl border border-line bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-card">
                   <h3 className="font-sora text-xl font-semibold text-foreground group-hover:text-primary transition-colors">{g.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-6 text-muted">{g.body}</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-primary-strong transition-colors">

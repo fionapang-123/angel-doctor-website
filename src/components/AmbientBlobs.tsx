@@ -1,9 +1,9 @@
 export function AmbientBlobs() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div className="animate-blob absolute -left-20 -top-20 size-72 rounded-full bg-blush/60 blur-3xl" />
-      <div className="animate-blob absolute -right-16 top-1/3 size-64 rounded-full bg-blush/50 blur-3xl" style={{ animationDelay: "-6s" }} />
-      <div className="animate-blob absolute bottom-0 left-1/3 size-56 rounded-full bg-blush/40 blur-3xl" style={{ animationDelay: "-12s" }} />
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,231,245,0.76)_0%,rgba(255,255,255,0)_38%),linear-gradient(160deg,rgba(238,243,255,0.86)_18%,rgba(255,255,255,0)_66%)]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-white/80" />
+      <div className="absolute inset-y-0 left-1/2 w-px bg-teal/5" />
     </div>
   );
 }

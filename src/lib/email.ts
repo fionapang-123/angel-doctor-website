@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import type { LeadRow } from "@/lib/supabase";
 
 function getResend() {
   const key = process.env.RESEND_API_KEY;
@@ -6,20 +7,14 @@ function getResend() {
   return new Resend(key);
 }
 
-const TEAM_EMAIL = "fiona.pang123@gmail.com";
+const TEAM_EMAIL = process.env.LEAD_NOTIFY_EMAIL || process.env.NEXT_PUBLIC_CONTACT_EMAIL || "marketing@jumper-medical.com";
 const FROM = process.env.EMAIL_FROM || "Angel Doctor <onboarding@resend.dev>";
 
 /** Send a notification to the Angel Doctor team about a new lead */
-export async function notifyTeam(lead: {
-  source: string;
-  contact: string;
-  treatment?: string | null;
-  city?: string | null;
-  message?: string | null;
-}) {
+export async function notifyTeam(lead: LeadRow) {
   if (!process.env.RESEND_API_KEY) {
     console.log("[Email] SKIP — no RESEND_API_KEY configured");
-    return;
+    return false;
   }
 
   const resend = getResend();
@@ -28,6 +23,13 @@ export async function notifyTeam(lead: {
     `Contact: ${lead.contact}`,
     lead.treatment ? `Treatment: ${lead.treatment}` : null,
     lead.city ? `City: ${lead.city}` : null,
+    lead.timeline ? `Timeline: ${lead.timeline}` : null,
+    typeof lead.local_support === "boolean" ? `Local support: ${lead.local_support ? "Yes" : "No"}` : null,
+    lead.provider ? `Hospital or clinic: ${lead.provider}` : null,
+    lead.visit_date ? `Visit date: ${lead.visit_date}` : null,
+    lead.duration ? `Duration: ${lead.duration}` : null,
+    lead.language ? `Language: ${lead.language}` : null,
+    lead.tasks ? `Support tasks: ${lead.tasks}` : null,
     lead.message ? `Message: ${lead.message}` : null,
   ]
     .filter(Boolean)
@@ -37,17 +39,22 @@ export async function notifyTeam(lead: {
     from: FROM,
     to: TEAM_EMAIL,
     subject: `New ${lead.source === "escort" ? "Escort" : "Care Plan"} Lead — ${lead.contact}`,
-    text: `New lead submitted via angeldoctor.com\n\n${summary}\n\nView all leads: https://angeldoctor.com/admin (Phase 2)`,
+    text: `New lead submitted via angeldoctor.com\n\n${summary}`,
   });
 
-  if (error) console.error("[Email] notifyTeam error:", error);
+  if (error) {
+    console.error("[Email] notifyTeam error:", error);
+    return false;
+  }
+
+  return true;
 }
 
 /** Send an auto-reply confirmation to the user */
 export async function autoReply(email: string, source: string) {
   if (!process.env.RESEND_API_KEY) {
     console.log("[Email] SKIP auto-reply — no RESEND_API_KEY configured");
-    return;
+    return false;
   }
 
   const resend = getResend();
@@ -86,5 +93,10 @@ marketing@jumper-medical.com`;
     text,
   });
 
-  if (error) console.error("[Email] autoReply error:", error);
+  if (error) {
+    console.error("[Email] autoReply error:", error);
+    return false;
+  }
+
+  return true;
 }

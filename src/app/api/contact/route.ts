@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { insertLead } from "@/lib/supabase";
 import { notifyTeam, autoReply } from "@/lib/email";
+import {
+  hasLeadStorageConfig,
+  hasTeamNotificationConfig,
+  isEmailContact,
+  isValidLeadContact,
+  normalizeContact,
+  wantsLocalSupport,
+} from "@/lib/lead";
 
 const VALID_TREATMENTS = [
   "Dental Care", "Health Checkup", "TCM Recovery",
@@ -18,17 +26,12 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // --- Validate ---
-    if (!body.contact || typeof body.contact !== "string" || body.contact.trim().length < 3) {
+    const contact = normalizeContact(body.contact);
+    const emailContact = isEmailContact(contact);
+
+    if (!isValidLeadContact(contact)) {
       return NextResponse.json(
-        { error: "Please provide a valid email address." },
-        { status: 400 }
-      );
-    }
-    const contact = body.contact.trim().toLowerCase();
-    if (!contact.includes("@")) {
-      return NextResponse.json(
-        { error: "Please provide a valid email address." },
+        { error: "Please provide a valid email address or WhatsApp number." },
         { status: 400 }
       );
     }
@@ -40,34 +43,48 @@ export async function POST(request: Request) {
       );
     }
 
-    // --- Store lead in Supabase ---
-    try {
-      await insertLead({
-        source: "contact",
-        contact,
-        treatment: body.treatment,
-        city: body.city && VALID_CITIES.includes(body.city) ? body.city : null,
-        timeline: body.timeline || null,
-        local_support: body.localSupport === true,
-        message: body.message || null,
-      });
-    } catch (dbErr) {
-      console.error("[api/contact] Supabase insert failed:", dbErr);
-      // Don't block the user — still return success, but log the failure
-    }
-
-    // --- Send emails (non-blocking) ---
-    notifyTeam({
-      source: "contact",
+    const city = body.city && VALID_CITIES.includes(body.city) ? body.city : null;
+    const lead = {
+      source: "contact" as const,
       contact,
       treatment: body.treatment,
-      city: body.city || null,
+      city,
+      timeline: body.timeline || null,
+      local_support: wantsLocalSupport(body.localSupport),
       message: body.message || null,
-    }).catch((e) => console.error("[api/contact] notifyTeam failed:", e));
+    };
 
-    autoReply(contact, "contact").catch((e) =>
-      console.error("[api/contact] autoReply failed:", e)
-    );
+    let savedToDatabase = false;
+    let notifiedTeam = false;
+
+    if (hasLeadStorageConfig()) {
+      try {
+        await insertLead(lead);
+        savedToDatabase = true;
+      } catch (dbErr) {
+        console.error("[api/contact] Supabase insert failed:", dbErr);
+      }
+    }
+
+    if (hasTeamNotificationConfig()) {
+      notifiedTeam = await notifyTeam(lead);
+    }
+
+    if (!savedToDatabase && !notifiedTeam) {
+      return NextResponse.json(
+        {
+          error: "Submission could not be completed. Please contact Angel Doctor directly by WhatsApp or email.",
+          fallback: true,
+        },
+        { status: 503 }
+      );
+    }
+
+    if (emailContact) {
+      autoReply(contact, "contact").catch((e) =>
+        console.error("[api/contact] autoReply failed:", e)
+      );
+    }
 
     return NextResponse.json({
       success: true,
@@ -76,7 +93,10 @@ export async function POST(request: Request) {
     });
   } catch {
     return NextResponse.json(
-      { error: "Unable to process your request. Please try again or contact us directly." },
+      {
+        error: "Unable to process your request. Please try again or contact Angel Doctor directly by WhatsApp or email.",
+        fallback: true,
+      },
       { status: 500 }
     );
   }

@@ -1,9 +1,19 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { createMetadata } from "@/config/metadata";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "Terms", href: "/legal/terms" },
 ];
+
+const page = {
+  slug: "/legal/terms",
+  title: "Terms of Use | Angel Doctor",
+  description:
+    "Read the terms for using Angel Doctor's medical travel coordination, hospital access support, and local medical escort services.",
+};
+
+export const metadata = createMetadata(page);
 
 export default function TermsPage() {
   return (

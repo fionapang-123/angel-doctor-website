@@ -8,13 +8,8 @@ export function CTASection({ page }: { page: PageContent }) {
 
   return (
     <section className="mx-auto max-w-3xl px-4 pb-20 sm:px-6 lg:px-8">
-      <div className="relative overflow-hidden rounded-2xl border border-primary/8 bg-blush px-6 py-14 text-center sm:px-14 sm:py-16">
-        {/* Subtle decorative accents */}
-        <div className="pointer-events-none absolute -right-20 -top-20 size-72 rounded-full bg-primary/[0.03]" />
-        <div className="pointer-events-none absolute -bottom-14 -left-14 size-48 rounded-full bg-primary/[0.02]" />
-        <div className="pointer-events-none absolute right-1/3 top-8 size-1.5 rounded-full bg-primary/10" />
-        <div className="pointer-events-none absolute left-1/4 bottom-12 size-2 rounded-full bg-primary/8" />
-
+      <div className="relative overflow-hidden rounded-xl border border-line bg-white px-6 py-14 text-center shadow-soft sm:px-14 sm:py-16">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-line" />
         <div className="relative">
           <h2 className="font-sora text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             {isHome ? "Start your care journey today" : "Ready to understand your options?"}

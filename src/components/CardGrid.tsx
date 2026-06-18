@@ -11,8 +11,8 @@ function cardIcon(title: string) {
 
 function CardShell({ item }: { item: CardItem }) {
   return (
-    <div className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/15 hover:shadow-card">
-      <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-blush text-primary">
+    <div className="group flex h-full flex-col rounded-xl border border-line bg-surface p-6 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-card">
+      <div className="mb-4 flex size-11 items-center justify-center rounded-lg bg-primary-soft text-primary ring-1 ring-primary/10">
         {cardIcon(item.title)}
       </div>
       <h3 className="text-base font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">

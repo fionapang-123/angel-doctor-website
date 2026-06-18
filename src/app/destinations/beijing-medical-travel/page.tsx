@@ -40,7 +40,7 @@ export default function BeijingPage() {
   return (
     <>
       <SchemaJsonLd data={schema} />
-      <DestinationCityPage data={data} />
+      <DestinationCityPage data={data} includeSchema={false} />
     </>
   );
 }

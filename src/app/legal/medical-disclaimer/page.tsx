@@ -1,9 +1,19 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { createMetadata } from "@/config/metadata";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "Medical Disclaimer", href: "/legal/medical-disclaimer" },
 ];
+
+const page = {
+  slug: "/legal/medical-disclaimer",
+  title: "Medical Disclaimer | Angel Doctor",
+  description:
+    "Understand Angel Doctor's role as a healthcare coordination and medical travel support platform, not a provider of diagnosis or treatment.",
+};
+
+export const metadata = createMetadata(page);
 
 export default function MedicalDisclaimerPage() {
   return (

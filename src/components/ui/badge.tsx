@@ -13,7 +13,7 @@ export function Badge({ className, variant = "default", ...props }: HTMLAttribut
   return (
     <span
       className={cn(
-        "inline-flex min-h-7 items-center rounded-full px-3 py-1 text-xs font-semibold leading-none",
+        "inline-flex min-h-7 items-center rounded-md px-3 py-1 text-xs font-semibold leading-none",
         variants[variant],
         className,
       )}

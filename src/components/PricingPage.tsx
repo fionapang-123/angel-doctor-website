@@ -4,6 +4,7 @@ import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { Badge } from "@/components/ui/badge";
+import { AnswerBlock } from "@/components/AnswerBlock";
 
 const crumbs = [
   { label: "Home", href: "/" },
@@ -17,7 +18,7 @@ const packages = [
     desc: "Get matched and booked — start with a free pre-check, then we handle your appointment.",
     featured: true,
     features: [
-      "Free dental pre-check — send photos/X-rays, get treatment guidance",
+      "Free dental pre-check — describe your need; photos/X-rays are optional",
       "Appointment help — hospital matching, booking confirmation, visit checklist ($39)",
       "English guidance throughout",
       "Clear service fee — no hidden costs",
@@ -58,7 +59,7 @@ const packages = [
 
 const faqs = [
   { q: "Are hospital treatment fees included?", a: "No. Hospital treatment fees are paid separately and directly by the patient to the hospital or clinic. Final medical costs are confirmed by the hospital after in-person examination. Angel Doctor provides guidance and coordination, not medical diagnosis or treatment." },
-  { q: "What is a dental pre-check?", a: "You upload dental photos or X-rays. We help you understand possible treatment options, estimated cost ranges, and next steps — before you commit to anything. Free, no obligation." },
+  { q: "What is a dental pre-check?", a: "You describe your dental concern and, if useful, share photos or X-rays as optional supporting materials. We help you understand possible treatment options, estimated cost ranges, and next steps — before you commit to anything. Free, no obligation." },
   { q: "Can I use the in-hospital support without booking through Angel Doctor?", a: "Yes. If you already have a hospital or clinic visit booked and just need a local care companion for registration, translation, and navigation, you can book the In-Hospital Support package." },
   { q: "What does the local care companion do?", a: "A trained medical escort helps with hospital registration, payment, clinic navigation, communication support, and visit follow-up. They do not provide medical diagnosis, treatment, or clinical decisions." },
   { q: "How much will my total treatment cost?", a: "Your total includes: (1) hospital/provider medical fees — paid directly to the hospital after examination, (2) Angel Doctor service fees — as shown above. We provide estimated cost ranges during the pre-check." },
@@ -84,11 +85,20 @@ export function PricingPage() {
             <p className="mt-4 text-sm leading-6 text-muted">
               Public hospitals · English guidance · Clear service fee
             </p>
+            <div className="mt-7">
+              <CTAButton cta="carePlan" className="w-full sm:w-auto" />
+            </div>
           </div>
         </div>
       </section>
 
       <TrustBar />
+
+      <AnswerBlock title="How does Angel Doctor pricing work?">
+        <p>
+          Angel Doctor service fees cover coordination, guidance, and local support. Hospital or provider medical fees are separate and are paid directly by the patient to the hospital or clinic. Final medical costs depend on provider confirmation, examination, materials, treatment plan, and follow-up needs.
+        </p>
+      </AnswerBlock>
 
       {/* Package Cards */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -122,20 +132,6 @@ export function PricingPage() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Process flow */}
-        <div className="mt-12 rounded-2xl border border-line bg-mist/60 p-6 sm:p-8">
-          <p className="text-sm font-semibold text-foreground">How it works</p>
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted sm:gap-4">
-            <span className="rounded-lg bg-surface px-3 py-1.5 font-medium text-foreground">1. Send photos</span>
-            <span className="text-muted/40">→</span>
-            <span className="rounded-lg bg-surface px-3 py-1.5 font-medium text-foreground">2. Get guidance</span>
-            <span className="text-muted/40">→</span>
-            <span className="rounded-lg bg-surface px-3 py-1.5 font-medium text-foreground">3. Book visit</span>
-            <span className="text-muted/40">→</span>
-            <span className="rounded-lg bg-surface px-3 py-1.5 font-medium text-foreground">4. Meet companion</span>
-          </div>
         </div>
 
         {/* Disclaimer */}
@@ -184,7 +180,7 @@ export function PricingPage() {
               Start with a free pre-check
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted">
-              Send your dental photos or describe your treatment need. We'll help you understand your options, estimated costs, and next steps — no commitment.
+              Describe your treatment need. Optional photos, reports, or X-rays can help later, but they are not required to start.
             </p>
             <div className="mt-8">
               <CTAButton cta="carePlan" />

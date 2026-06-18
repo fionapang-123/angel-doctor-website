@@ -13,6 +13,8 @@ import { AmbientBlobs } from "@/components/AmbientBlobs";
 import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/config/site";
 import { hospitals } from "@/data/hospitals";
+import { createMetadata } from "@/config/metadata";
+import { AnswerBlock } from "@/components/AnswerBlock";
 
 const crumbs = [
   { label: "Home", href: "/" },
@@ -28,6 +30,33 @@ const providerTypes = [
   { type: "International Clinics", care: "English-speaking GP, specialist referral, health checkup, vaccinations", when: "When you prefer English-first communication and international-standard clinic experience.", related: [{ l: "Health Checkup", h: "/treatments/health-checkup-china" }] },
 ];
 
+const supportScenes = [
+  {
+    title: "Hospital navigation",
+    body: "A trained local medical escort helps international patients move through hospital departments, counters, and examination areas in China.",
+    src: "/images/escort-scenes/china-medical-escort-hospital-navigation.png",
+    alt: "Medical escort guiding an international patient through a hospital in China",
+  },
+  {
+    title: "Checkup guidance",
+    body: "During health checkups, an escort can help with registration flow, station routing, payment guidance, and communication with clinic staff.",
+    src: "/images/escort-scenes/international-patient-checkup-guidance-china.png",
+    alt: "International patient receiving health checkup guidance from a medical escort in China",
+  },
+  {
+    title: "Consultation communication",
+    body: "Angel Doctor supports appointment preparation and communication assistance while licensed healthcare providers make medical decisions.",
+    src: "/images/escort-scenes/hospital-consultation-communication-support.png",
+    alt: "International patient consultation communication support in a China healthcare setting",
+  },
+  {
+    title: "Arrival coordination",
+    body: "When arranged, local support can include arrival coordination from hotel, clinic, hospital entrance, or other agreed meeting points.",
+    src: "/images/escort-scenes/medical-travel-arrival-coordination-china.png",
+    alt: "Arrival coordination for an international medical travel patient in China",
+  },
+];
+
 const accessFaqs = [
   { q: "Can foreigners access hospitals in China?", a: "Yes. Foreigners can access many hospitals and healthcare providers in China. However, appointment processes, language support, payment methods, department availability, and documentation requirements vary by hospital. Angel Doctor helps international patients understand suitable options and coordinate the hospital visit process." },
   { q: "How does Angel Doctor choose a hospital for international patients?", a: "Angel Doctor recommends care options based on your medical need, preferred city, timeline, estimated budget, language support needs, and follow-up requirements. We consider provider type, department availability, and international patient support capability — not rankings or promotional arrangements." },
@@ -40,8 +69,11 @@ const accessFaqs = [
   { q: "Does Angel Doctor provide medical diagnosis or treatment?", a: "No. Angel Doctor provides care coordination, hospital matching, translation support, appointment assistance, and local medical escort services. Medical diagnosis, treatment decisions, prescriptions, procedures, and clinical recommendations are made by licensed healthcare providers." },
 ];
 
+const page = getPage("/hospital-access");
+
+export const metadata = createMetadata(page);
+
 export default function HospitalAccessPage() {
-  const page = getPage("/hospital-access");
   const schema = createPageSchema(page);
   return (
     <main>
@@ -70,6 +102,12 @@ export default function HospitalAccessPage() {
       </section>
 
       <TrustBar />
+
+      <AnswerBlock title="Can foreigners access hospitals in China?">
+        <p>
+          Yes. Foreigners can access many hospitals, clinics, dental providers, checkup centers, and TCM providers in China, but appointment rules, language support, payment methods, department capacity, and documentation requirements vary. Angel Doctor helps international patients understand suitable options and coordinate the visit process.
+        </p>
+      </AnswerBlock>
 
       {/* What Hospital Access Means */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -101,8 +139,43 @@ export default function HospitalAccessPage() {
         </div>
       </section>
 
-      {/* Provider Types */}
+      {/* Support Scenes */}
       <section className="border-y border-line bg-mist/50">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Patient Support Scenes</p>
+              <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">What Hospital Support Looks Like</h2>
+              <p className="mt-4 text-base leading-7 text-muted">
+                International patients often need help with more than booking. Angel Doctor&apos;s local medical escort support is designed around hospital navigation, registration flow, communication support, payment guidance, checkup routing, and follow-up coordination.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-muted">
+                These Angel Doctor service photos show actual hospital, arrival, and patient support environments. Medical escorts provide non-clinical support. Diagnosis, treatment plans, prescriptions, and clinical decisions remain with licensed healthcare providers.
+              </p>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {supportScenes.map((scene) => (
+                <figure key={scene.title} className="overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
+                  <Image
+                    src={scene.src}
+                    alt={scene.alt}
+                    width={1536}
+                    height={1024}
+                    className="h-52 w-full object-cover sm:h-56"
+                  />
+                  <figcaption className="p-5">
+                    <h3 className="text-base font-semibold text-foreground">{scene.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted">{scene.body}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Provider Types */}
+      <section className="border-b border-line bg-mist/50">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Provider Types</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Types of Hospitals & Providers in Our Network</h2>
@@ -163,7 +236,7 @@ export default function HospitalAccessPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Partner Hospitals</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Hospital & Provider Examples</h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-            Below are selected hospitals and healthcare providers in Angel Doctor's coordination network. Each card shows the provider type, care areas, how Angel Doctor can help, and what affects appointment availability.
+            Below are selected hospitals and healthcare providers in Angel Doctor&apos;s coordination network. Each card shows the provider type, care areas, how Angel Doctor can help, and what affects appointment availability.
           </p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {hospitals.slice(0, 24).map((h, i) => (
@@ -204,7 +277,7 @@ export default function HospitalAccessPage() {
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-semibold text-foreground">Important Notes on Hospital Access</h2>
           <div className="mt-6 max-w-3xl space-y-4 text-sm leading-7 text-muted">
-            <p>Hospital access and appointment availability depend on the patient's condition, department capacity, doctor schedule, medical record review, city preference, timeline, and provider confirmation.</p>
+            <p>Hospital access and appointment availability depend on the patient&apos;s condition, department capacity, doctor schedule, medical record review, city preference, timeline, and provider confirmation.</p>
             <p>Angel Doctor provides care coordination, translation support, appointment assistance, and local medical escort services. Medical diagnosis, treatment plans, medical risks, prescriptions, procedures, and clinical decisions are made by licensed healthcare providers.</p>
             <p>Angel Doctor does not guarantee treatment outcomes, specific doctor availability, or hospital acceptance for every case. For complex medical conditions, patients may be asked to provide medical records for review before care options can be recommended.</p>
           </div>

@@ -40,7 +40,7 @@ export default function HangzhouPage() {
   return (
     <>
       <SchemaJsonLd data={schema} />
-      <DestinationCityPage data={data} />
+      <DestinationCityPage data={data} includeSchema={false} />
     </>
   );
 }

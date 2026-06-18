@@ -16,9 +16,8 @@ export function HeroSection({ page }: { page: PageContent }) {
   const isHome = page.slug === "/";
 
   return (
-    <section className="relative overflow-hidden border-b border-line">
-      {/* Subtle warm glow at top */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(228,240,255,0.8),transparent)]" />
+    <section className="relative overflow-hidden border-b border-line bg-[linear-gradient(180deg,rgba(238,246,255,0.82)_0%,rgba(255,240,250,0.42)_44%,rgba(248,251,255,0.98)_78%)]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/80" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pb-20">
         <Breadcrumbs items={page.breadcrumbs} />
@@ -68,11 +67,8 @@ export function HeroSection({ page }: { page: PageContent }) {
           </div>
 
           {/* Right: Quick Answer card — more premium */}
-          <div className="relative overflow-hidden rounded-2xl border border-primary/8 bg-surface p-6 shadow-soft sm:p-8">
-            {/* Decorative accent */}
-            <div className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-blush" />
-            <div className="pointer-events-none absolute right-16 top-12 size-2 rounded-full bg-primary/15" />
-
+          <div className="relative overflow-hidden rounded-xl border border-primary/10 bg-white p-6 shadow-elevated sm:p-8">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-line" />
             <div className="relative">
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                 <BadgeCheck aria-hidden="true" className="size-3.5" />
@@ -81,7 +77,7 @@ export function HeroSection({ page }: { page: PageContent }) {
               <p className="mt-5 text-[15px] leading-7 text-foreground">
                 {page.quickAnswer || page.description}
               </p>
-              <div className="mt-6 rounded-xl border border-line bg-mist/80 p-4">
+              <div className="mt-6 rounded-lg border border-line bg-mist/80 p-4">
                 <p className="text-xs font-semibold text-foreground">Why patients choose us</p>
                 <p className="mt-1.5 text-sm leading-6 text-muted">{siteConfig.trustLine}</p>
               </div>

@@ -4,8 +4,12 @@ import { CTAButton } from "@/components/CTAButton";
 import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AmbientBlobs } from "@/components/AmbientBlobs";
+import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { Badge } from "@/components/ui/badge";
 import { FAQBlock } from "@/components/FAQBlock";
+import { AnswerBlock } from "@/components/AnswerBlock";
+import { createMetadata } from "@/config/metadata";
+import { getPage } from "@/data/pages";
 
 const crumbs = [
   { label: "Home", href: "/" },
@@ -49,6 +53,10 @@ const faqs = [
   { q: "How do I get started?", a: "Submit a care plan request. Tell us what you need, your preferred city, and your timeline. A coordinator responds within 1-2 business days with options." },
 ];
 
+const page = getPage("/treatments");
+
+export const metadata = createMetadata(page);
+
 export default function TreatmentsPage() {
   return (
     <main>
@@ -62,13 +70,25 @@ export default function TreatmentsPage() {
               Treatments in China
             </h1>
             <p className="mt-5 text-lg leading-8 text-muted">
-              Angel Doctor helps international patients coordinate dental care, health checkups, medical second opinions, and TCM recovery across major Chinese cities. Every treatment path includes English-speaking support and local medical escort coordination.
+              Angel Doctor helps international patients coordinate dental care, health checkups, medical second opinions, and TCM recovery across major Chinese cities.
             </p>
+            <p className="mt-3 text-base leading-7 text-muted">
+              Every treatment path includes English-speaking support and local medical escort coordination when needed.
+            </p>
+            <div className="mt-7">
+              <CTAButton cta="carePlan" className="w-full sm:w-auto" />
+            </div>
           </div>
         </div>
       </section>
 
       <TrustBar />
+
+      <AnswerBlock title="What treatments can Angel Doctor coordinate in China?">
+        <p>
+          Angel Doctor helps international patients understand and coordinate dental care, health checkups, medical second opinions, and TCM recovery in China. Support can include provider matching, appointment preparation, communication assistance, and local medical escort coordination. Licensed healthcare providers make all clinical decisions.
+        </p>
+      </AnswerBlock>
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-5 sm:grid-cols-2">
@@ -111,6 +131,7 @@ export default function TreatmentsPage() {
           </div>
         </div>
       </section>
+      <StickyMobileCTA page={{ slug: "/treatments", cta: "carePlan" }} />
     </main>
   );
 }

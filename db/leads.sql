@@ -1,5 +1,7 @@
 -- Run this in Supabase SQL Editor (https://supabase.com/dashboard/project/_/sql)
--- Creates the leads table for Angel Doctor contact form submissions.
+-- Creates the leads table for Angel Doctor contact and escort form submissions.
+-- The website writes leads through Next.js API routes with SUPABASE_SERVICE_ROLE_KEY.
+-- Do not expose direct client-side inserts unless a future task explicitly adds abuse controls.
 
 CREATE TABLE IF NOT EXISTS leads (
   id            uuid DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -24,13 +26,13 @@ CREATE TABLE IF NOT EXISTS leads (
 -- Enable Row Level Security
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
 
--- Allow inserts from the public anon key (for API routes using service_role)
--- Service role bypasses RLS, so this is for future client-side use if needed
-CREATE POLICY "anon_can_insert" ON leads
-  FOR INSERT TO anon
-  WITH CHECK (true);
+-- Service role bypasses RLS for the server API routes.
+DROP POLICY IF EXISTS "anon_can_insert" ON leads;
 
 -- Only authenticated users (admin dashboard) can read
 CREATE POLICY "auth_can_select" ON leads
   FOR SELECT TO authenticated
   USING (true);
+
+CREATE INDEX IF NOT EXISTS leads_created_at_idx ON leads (created_at DESC);
+CREATE INDEX IF NOT EXISTS leads_source_status_idx ON leads (source, status);

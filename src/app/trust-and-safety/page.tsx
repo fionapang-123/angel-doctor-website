@@ -5,11 +5,21 @@ import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AmbientBlobs } from "@/components/AmbientBlobs";
 import { Badge } from "@/components/ui/badge";
+import { createMetadata } from "@/config/metadata";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "Trust & Safety", href: "/trust-and-safety" },
 ];
+
+const page = {
+  slug: "/trust-and-safety",
+  title: "Trust & Safety for Medical Travel to China | Angel Doctor",
+  description:
+    "Learn how Angel Doctor protects international patients with clear service boundaries, privacy practices, trained escorts, and transparent coordination.",
+};
+
+export const metadata = createMetadata(page);
 
 const sections = [
   {

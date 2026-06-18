@@ -5,11 +5,21 @@ import { TrustBar } from "@/components/TrustBar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { Badge } from "@/components/ui/badge";
+import { createMetadata } from "@/config/metadata";
 
 const crumbs = [
   { label: "Home", href: "/" },
   { label: "About Angel Doctor", href: "/about" },
 ];
+
+const page = {
+  slug: "/about",
+  title: "About Angel Doctor | Medical Travel Coordination in China",
+  description:
+    "Learn about Angel Doctor's healthcare coordination, hospital matching, and local medical escort support for international patients in China.",
+};
+
+export const metadata = createMetadata(page);
 
 export default function AboutPage() {
   return (
@@ -38,7 +48,7 @@ export default function AboutPage() {
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What We Do</p>
         <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">Healthcare Coordination, Guided End to End</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-          Angel Doctor is a healthcare coordination and medical travel support platform for international patients seeking care in China. We don't just match you with a hospital — we coordinate your entire care journey.
+          Angel Doctor is a healthcare coordination and medical travel support platform for international patients seeking care in China. We don&apos;t just match you with a hospital — we coordinate your entire care journey.
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[
@@ -74,7 +84,7 @@ export default function AboutPage() {
                 Angel Doctor is backed by a healthcare group founded in 1998, with long-term experience in healthcare service operations, medical coordination, and patient support across China.
               </p>
               <p className="mt-3 text-base leading-7 text-muted">
-                This operational foundation means Angel Doctor is not a startup experiment in medical tourism. It is built on decades of healthcare infrastructure, service management, and patient care experience within China's medical system.
+                This operational foundation means Angel Doctor is not a startup experiment in medical tourism. It is built on decades of healthcare infrastructure, service management, and patient care experience within China&apos;s medical system.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">

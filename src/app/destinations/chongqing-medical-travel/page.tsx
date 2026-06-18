@@ -40,7 +40,7 @@ export default function ChongqingPage() {
   return (
     <>
       <SchemaJsonLd data={schema} />
-      <DestinationCityPage data={data} />
+      <DestinationCityPage data={data} includeSchema={false} />
     </>
   );
 }
